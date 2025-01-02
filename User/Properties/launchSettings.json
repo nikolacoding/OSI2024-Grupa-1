@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "User": {
+      "commandName": "Project",
+      "workingDirectory": "X:\\Projekti\\OSI2024\\User"
+    }
+  }
+}

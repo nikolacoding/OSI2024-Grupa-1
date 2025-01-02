@@ -15,20 +15,14 @@ namespace User {
 
     }
 
-    interface IAttributeParser {
-        public string? GetAttributeName(string attributeString);
-        public string? GetAttributeValue(string attributeString);
-    }
-
-    public sealed class FileManager : IInput, IOutput, IAttributeParser {
+    public sealed class FileManager : IInput, IOutput {
         public string? LookupAttribute(string attributeName) {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string projFolder = Path.GetFullPath(Path.Combine(baseDir, @"..\..\"));
-            string dataFolder = Path.Combine(projFolder, "Data");
+            string dataFolder = Constants.dataFolder;
+            Debug.WriteLine(Constants.dataFolder);
 
+            // otvara svaki fajl u Data folderu i trazi atribut naziva 'attributeName'
             if (Directory.Exists(dataFolder)) {
                 string[] files = Directory.GetFiles(dataFolder);
-
                 foreach (var file in files) {
                     string[] lines = File.ReadAllLines(file);
                     foreach (var line in lines) {
@@ -44,14 +38,14 @@ namespace User {
             }
         }
         
-        public string? GetAttributeName(string attributeString) {
+        public static string? GetAttributeName(string attributeString) {
             string[] parts = attributeString.Split("=");
 
             // npr. ulaz "ATTRIBUTE_NAME=Attribute_Value" vraca "ATTRIBUTE_NAME"
             return parts.Length != 2 ? null : parts[0];
         }
 
-        public string? GetAttributeValue(string attributeString) {
+        public static string? GetAttributeValue(string attributeString) {
             string[] parts = attributeString.Split("=");
 
             // npr. ulaz "ATTRIBUTE_NAME=Attribute_Value" vraca "Attribute_Value"

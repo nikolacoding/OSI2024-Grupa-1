@@ -10,34 +10,40 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace User {
-    public partial class ConsentForm : Form {
-        readonly private FileManager fm = new();
+    public partial class ConsentForm : Form, Interfaces.IInitializable {
         readonly private Constants constants = new();
 
-        public ConsentForm() {
-            InitializeComponent();
-            ControlBox = false;
+        public void SetDefaultWindowSettings() {
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            
-            button1.Enabled = false;
+            ControlBox = false;
+        }
 
+        public void FillStaticConstants() {
             label1.Text = constants.GetConsentText("FIRMNAME");
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) {
-            if (checkBox1.Checked) 
-                button1.Enabled = true;
-            else
-                button1.Enabled = false;
+        public void SetDefaultStates() {
+            consentCheckBox.Checked = false;
+            consentButton.Enabled = consentCheckBox.Checked;
         }
 
-        private void label1_Click(object sender, EventArgs e) {
+        public ConsentForm() {
+            InitializeComponent();
 
+            SetDefaultWindowSettings();
+            FillStaticConstants();
+            SetDefaultStates();
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        // "Razumijem" checkbox
+        private void consentCheckBox_CheckedChanged(object sender, EventArgs e) =>
+            consentButton.Enabled = consentCheckBox.Checked;
+
+        private void consentButton_click(object sender, EventArgs e) {
             MainForm.consentGiven = true;
             Close();
         }
+
+        private void label1_Click(object sender, EventArgs e) { }
     }
 }

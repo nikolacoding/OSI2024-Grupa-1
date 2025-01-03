@@ -13,6 +13,7 @@ namespace User {
     public partial class ConsentForm : Form, Interfaces.IInitializable {
         readonly private Constants constants = new();
 
+        // IInitializable
         public void SetDefaultWindowSettings() {
             FormBorderStyle = FormBorderStyle.FixedSingle;
             ControlBox = false;
@@ -26,9 +27,12 @@ namespace User {
             consentCheckBox.Checked = false;
             consentButton.Enabled = consentCheckBox.Checked;
         }
+        // #IInitializable
 
         public ConsentForm() {
             InitializeComponent();
+            if (!LoginForm.loginSuccessful)
+                Close();
 
             SetDefaultWindowSettings();
             FillStaticConstants();
@@ -39,8 +43,8 @@ namespace User {
         private void consentCheckBox_CheckedChanged(object sender, EventArgs e) =>
             consentButton.Enabled = consentCheckBox.Checked;
 
+        // "Nastavi" dugme
         private void consentButton_click(object sender, EventArgs e) {
-            MainForm.consentGiven = true;
             Close();
         }
 

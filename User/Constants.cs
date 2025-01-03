@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace User {
+    // mozda konvertovati u struct kasnije
     public sealed class Constants {
         private readonly FileManager fm = new();
 
@@ -16,32 +17,33 @@ namespace User {
         private static readonly string projFolder = Path.GetFullPath(Path.Combine(baseDir, pathPrefix));
         
         public static readonly string dataFolder = Path.Combine(projFolder, "Data");
+        public static readonly string accountsFile = "UserAccounts.txt";
 
-        private readonly string consentTextPlaceholder = "Prije upotrebe korisničke " +
-            "podrške za {0}, ja (korisnik) garantujem sljedeće:\r\n\r\n" +
+        private static readonly string consentTextPlaceholder = "Prije upotrebe korisničke " +
+            "podrške za {0}, ja, {1}, garantujem sljedeće:\r\n\r\n" +
             "1. Strpljenje\r\n" +
             "2. Opšte poštovanje i uljudnost prema operaterima\r\n" +
             "3. Razumijevanje politike privatnosti i gdje idu moji podaci\r\n" +
             "4. Razumijevanje vlastitih prava na žalbe i pohvale\r\n" +
             "5. Opšti razum";
 
-        private readonly string mainFormTitlePlaceholder = "Korisnička podrška [{0}]";
-        
+        private readonly string windowTitlePlaceholder = "Korisnička podrška - {0}";
+
         // Generalizovati ovo
         public string GetConsentText(string firmNameAttribute) {
             string? firmName = fm.LookupAttribute(firmNameAttribute);
             if (firmName == null) 
                 return consentTextPlaceholder;
             else
-                return string.Format(consentTextPlaceholder, firmName);
+                return string.Format(consentTextPlaceholder, firmName, LoginForm.loggedInAccountUsername);
         }
 
-        public string GetMainFormTitle(string firmNameAttribute) {
+        public string GetFormWindowTitle(string firmNameAttribute) {
             string? firmName = fm.LookupAttribute(firmNameAttribute);
             if (firmName == null)
-                return mainFormTitlePlaceholder;
+                return windowTitlePlaceholder;
             else
-                return string.Format(mainFormTitlePlaceholder, firmName);
+                return string.Format(windowTitlePlaceholder, firmName);
         }
     }
 }

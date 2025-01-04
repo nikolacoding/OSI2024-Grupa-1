@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Data;
@@ -18,6 +19,7 @@ namespace User {
         
         public static readonly string dataFolder = Path.Combine(projFolder, "Data");
         public static readonly string accountsFile = "UserAccounts.txt";
+        public static readonly string ticketsFile = "Tickets.txt";
 
         private static readonly string consentTextPlaceholder = "Prije upotrebe korisničke " +
             "podrške za {0}, ja, {1}, garantujem sljedeće:\r\n\r\n" +
@@ -27,7 +29,15 @@ namespace User {
             "4. Razumijevanje vlastitih prava na žalbe i pohvale\r\n" +
             "5. Opšti razum";
 
-        private readonly string windowTitlePlaceholder = "Korisnička podrška - {0}";
+        private static readonly string windowTitlePlaceholder = "Korisnička podrška - {0}";
+
+        public static readonly TicketData ticketDataPlaceholder = new TicketData {
+            ClientName = "{client}",
+            Title = "{title}",
+            Content = "{content}",
+            Status = "{status}",
+            AssignedOperatorName = "{operator}"
+        };
 
         // Generalizovati ovo
         public string GetConsentText(string firmNameAttribute) {

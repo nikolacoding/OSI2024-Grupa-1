@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Data;
+#nullable disable
 namespace User {
 
     interface IInput {
         bool LookupAccount(string username, string password);
         string? LookupAttribute(string attributeName);
+        (bool, TicketData) LookupTicket(string username);
     }
 
     interface IOutput { 
@@ -63,6 +66,53 @@ namespace User {
                 Debug.WriteLine("Data folder not found.");
                 return null;
             }
+        }
+
+        public (bool, TicketData) LookupTicket(string username) {
+            string dataFolder = Constants.dataFolder;
+            string targetFile = Constants.ticketsFile;
+            string key = "CLIENT=" + username;
+
+            // da li postoji /Data folder
+            if (Directory.Exists(dataFolder)) {
+                string[] files = Directory.GetFiles(dataFolder);
+
+                // provjera svakog fajla u /Data
+                foreach (string file in files) {
+                    string currentFile = new DirectoryInfo(file).Name;
+                    Debug.WriteLine(currentFile);
+
+                    // ako je fajl koji prelazimo u trenutnoj iteraciji petlje jednak trazenom
+                    if (currentFile == targetFile) {
+                        string[] lines = File.ReadAllLines(file);
+                        int linesSize = lines.Length;
+                        int linesToRead = 5;
+
+                        string[] relevantLines = new string[linesToRead];
+                        // provjeravamo svaku njegovu liniju i trazimo kljuc
+                        for (int i = 0; i < linesSize; i++) {
+                            string line = lines[i];
+                            // ako smo nasli trazenu liniju, citamo narednih N sa ostalim sadrzajem
+                            if (line == key) {
+                                for (int j = 0; j < linesToRead; j++) {
+                                    string relevantLine = lines[i + j];
+                                    relevantLines[j] = GetAttributeValue(relevantLine);
+                                }
+                            }
+                        }
+                        TicketData ticketData = new TicketData {
+                            ClientName = relevantLines[0],
+                            Title = relevantLines[1],
+                            Content = relevantLines[2],
+                            Status = relevantLines[3],
+                            AssignedOperatorName = relevantLines[4],
+                        };
+
+                        return (true, ticketData);
+                    }
+                }
+            }
+            return (false, Constants.ticketDataPlaceholder);
         }
 
         public static bool CheckForAccountInFile(string clampedCreds, string username, string password) {

@@ -3,40 +3,40 @@
   "WorkspaceRootPath": "X:\\Projekti\\OSI2024\\User\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|X:\\Projekti\\OSI2024\\User\\consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:consentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|x:\\projekti\\osi2024\\user\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3479722F-9EBE-45A5-90CA-43A0A38E3442}|User.csproj|solutionrelative:data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,26 +62,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "X:\\Projekti\\OSI2024\\User\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAZAAAA",
+              "DocumentIndex": 8,
+              "Title": "Data.cs",
+              "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\Data.cs",
+              "RelativeDocumentMoniker": "Data.cs",
+              "ToolTip": "X:\\Projekti\\OSI2024\\User\\Data.cs",
+              "RelativeToolTip": "Data.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-03T18:56:27.172Z",
+              "WhenOpened": "2025-01-04T21:31:48.634Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "ConsentForm.cs",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\ConsentForm.cs",
               "RelativeDocumentMoniker": "ConsentForm.cs",
               "ToolTip": "X:\\Projekti\\OSI2024\\User\\ConsentForm.cs",
               "RelativeToolTip": "ConsentForm.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAYwC0AAAAaAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-03T17:18:32.532Z",
               "EditorCaption": ""
@@ -100,20 +100,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainForm.cs",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "X:\\Projekti\\OSI2024\\User\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAAAC8AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-03T16:35:25.589Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "MainForm.cs [Design]",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
@@ -125,46 +125,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "Constants.cs",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\Constants.cs",
               "RelativeDocumentMoniker": "Constants.cs",
               "ToolTip": "X:\\Projekti\\OSI2024\\User\\Constants.cs",
               "RelativeToolTip": "Constants.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAAACUAAABoAAAA",
+              "ViewState": "AQIAABcAAAAAAAAAAAAWwCUAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-03T16:30:32.741Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "FileManager.cs",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\FileManager.cs",
               "RelativeDocumentMoniker": "FileManager.cs",
               "ToolTip": "X:\\Projekti\\OSI2024\\User\\FileManager.cs",
               "RelativeToolTip": "FileManager.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAYwBkAAABAAAAA",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAAAGIAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-03T16:00:05.362Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "LoginForm.cs",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\LoginForm.cs",
               "RelativeDocumentMoniker": "LoginForm.cs",
               "ToolTip": "X:\\Projekti\\OSI2024\\User\\LoginForm.cs",
               "RelativeToolTip": "LoginForm.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAAADMAAAAgAAAA",
+              "ViewState": "AQIAACMAAAAAAAAAAAAWwBMAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-03T15:57:05.41Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "LoginForm.cs [Design]",
               "DocumentMoniker": "X:\\Projekti\\OSI2024\\User\\LoginForm.cs",
               "RelativeDocumentMoniker": "LoginForm.cs",

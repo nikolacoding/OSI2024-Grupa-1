@@ -1,16 +1,22 @@
-#include "AccountManager.h"
+#include "CreateDelete.h"
+#include "HandleOperater.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 
 int main() {
-    std::cout << "Unesite:\n 1 - za upravljanje nalozima\n2 - za pregled tiketa"<<std::endl;
-    std::cout<<"Izbor opcije: ";
+    std::cout << "Unesite:\n1 - za upravljanje nalozima\n"
+              <<"2 - za pregled tiketa\n"
+              <<"3 - za pregled operatera\n"
+              <<"Izbor opcije: ";
     int glavniIzbor;
     std::cin >> glavniIzbor;
 
-    if (glavniIzbor == 1) {
-        std:: cout<<"Unesite:"<<"\n"<<"1 - za kreiranje novog naloga"<<"\n"<<"2 - za brisanje naloga"<<std::endl;
-        std:: cout<<"Izbor opcije: ";
+    if (glavniIzbor == 1) 
+    {
+        std:: cout<<"Unesite:\n1 - za kreiranje novog naloga\n"
+                  <<"2 - za brisanje naloga\n"
+             	  <<"Izbor opcije: ";
         int izborKB;
         std::cin >> izborKB;
 
@@ -42,7 +48,8 @@ int main() {
             createAccount(filePath, imeNaloga, lozinka);
         }
 
-        if (izborKB == 2) {
+        else if (izborKB == 2) 
+        {
             std::cout << "Unesite:\n1 - za brisanje klijentskog naloga\n"
                       << "2 - za brisanje administratorskog naloga\n"
                       << "3 - za brisanje operaorskog naloga\nIzbor opcije: ";
@@ -63,11 +70,13 @@ int main() {
             std::string imeNaloga, lozinka;
             std::cout << "Unesite:\nIme naloga: ";
             std::cin >> imeNaloga;
-            std::cout << "Lozinka: ";
-            std::cin >> lozinka;
 
-            deleteAccount(filePath, imeNaloga, lozinka);
+            deleteAccount(filePath, imeNaloga);
         }
+    }
+    else if(glavniIzbor==3)
+    { 
+       handleOperator();        
     }
 
     return 0;

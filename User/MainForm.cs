@@ -4,7 +4,9 @@ using System.Windows.Forms.Design;
 using System.Windows.Forms.VisualStyles;
 using User;
 
+using Data;
 #nullable disable
+
 namespace User {
     public sealed partial class MainForm : Form, Interfaces.IInitializable {
         // debug parametri za preskakanje prva dva prozora;
@@ -33,10 +35,22 @@ namespace User {
             archivedTicketsButton.Enabled = true;
             refreshButton.Enabled = true;
             accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
+            DisplayTicketData();
         }
         // #IInitializable
 
         private void FailedLoginCloseOnStart(object sender, EventArgs e) => Close();
+
+        private void DisplayTicketData() {
+            (bool, TicketData) result = fm.LookupTicket(LoginForm.loggedInAccountUsername);
+            TicketData ticketData = result.Item2;
+
+            if (result.Item1) {
+                ticketTitleLabel.Text = ticketData.Title;
+                ticketContentLabel.Text = ticketData.Content;
+                ticketStateLabel.Text = ticketData.Status;
+            }
+        }
 
         public MainForm() {
             // ako korisnik nije vec prijavljen, prikazati formu za prijavu
@@ -85,7 +99,7 @@ namespace User {
 
         // "Refresh" dugme
         private void refreshButton_Click(object sender, EventArgs e) {
-
+            DisplayTicketData();
         }
 
         private void label2_Click(object sender, EventArgs e) { }

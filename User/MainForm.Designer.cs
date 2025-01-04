@@ -68,10 +68,11 @@
             // 
             // ticketContentLabel
             // 
-            ticketContentLabel.AutoSize = true;
-            ticketContentLabel.Location = new Point(12, 186);
+            ticketContentLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ticketContentLabel.Location = new Point(12, 191);
+            ticketContentLabel.MaximumSize = new Size(600, 135);
             ticketContentLabel.Name = "ticketContentLabel";
-            ticketContentLabel.Size = new Size(592, 135);
+            ticketContentLabel.Size = new Size(380, 108);
             ticketContentLabel.TabIndex = 3;
             ticketContentLabel.Text = resources.GetString("ticketContentLabel.Text");
             // 
@@ -145,7 +146,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(615, 330);
+            ClientSize = new Size(615, 300);
             Controls.Add(accountNameLabel);
             Controls.Add(accountSettingsButton);
             Controls.Add(refreshButton);

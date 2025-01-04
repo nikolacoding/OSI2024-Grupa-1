@@ -118,14 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ticketContentLabel.Text" xml:space="preserve">
-    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Cras tempor sapien non massa facilisis, eget tempor ante laoreet. 
-Praesent tellus purus, vestibulum vel enim pellentesque, ullamcorper fringilla 
-eros. Sed tempus vitae purus non ornare. Aenean sit amet urna iaculis, malesuada 
-libero in, convallis augue. Sed pretium lacus ut ipsum efficitur sagittis. Nunc nec ullamcorper felis. 
-Ut a tristique eros, eget euismod ligula. Mauris cursus tincidunt neque, pharetra ullamcorper felis scelerisque a. 
-Aliquam cursus bibendum enim id mollis. Proin lectus nulla, eleifend quis aliquam in, consequat pretium 
-dui. Pellentesque convallis quis sapien ut fringilla. Morbi fringilla tempor diam. 
-Duis pellentesque ullamcorper tellus ut tempor. Nulla sagittis eu erat vitae porttitor.</value>
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor sapien non massa facilisis, eget tempor ante laoreet. Praesent tellus purus, vestibulum vel enim pellentesque, ullamcorper fringilla eros. Sed tempus vitae purus non ornare. Aeneana</value>
   </data>
 </root>

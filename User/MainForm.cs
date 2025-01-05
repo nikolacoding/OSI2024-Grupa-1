@@ -20,6 +20,15 @@ namespace User {
         private readonly Constants constants = new();
         private readonly FileManager fm = new();
 
+        private readonly Dictionary<string, System.Timers.Timer> activeTimers = new();
+
+        private enum TicketStates {
+            NO_TICKETS,
+            TICKET_OPEN,
+            TICKET_ASSIGNED,
+            TICKET_RETURNED,
+        };
+
         // IInitializable
         public void SetDefaultWindowSettings() {
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -30,29 +39,110 @@ namespace User {
         }
 
         public void SetDefaultStates() {
-            createTicketButton.Enabled = !activeTicketExists;
-            respondButton.Enabled = false;
+            DisplayTicketData();
             archivedTicketsButton.Enabled = true;
             refreshButton.Enabled = true;
             accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
-            DisplayTicketData();
+            autoRefreshCheckBox.Checked = true;
+            refreshButton.Enabled = !autoRefreshCheckBox.Checked;
         }
         // #IInitializable
 
-        private void FailedLoginCloseOnStart(object sender, EventArgs e) => Close();
+        private void UpdateButtonStates(TicketStates state) {
+            switch (state) {
+                case TicketStates.TICKET_OPEN: // "Otvoren"
+                    createTicketButton.Enabled = false;
+                    respondButton.Enabled = false;
 
-        private void DisplayTicketData() {
-            (bool, TicketData) result = fm.LookupTicket(LoginForm.loggedInAccountUsername);
-            TicketData ticketData = result.Item2;
+                    ticketTitleLabel.ForeColor = Color.Black;
+                    ticketStatusLabel.ForeColor = Color.Green;
+                    break;
+                case TicketStates.TICKET_ASSIGNED: // "Dodijeljen operateru"
+                    UpdateButtonStates(TicketStates.TICKET_OPEN);
+                    // ^ isto ponasanje kao za TICKET_OPEN, samo druga boja
+                    ticketStatusLabel.ForeColor = Color.Blue;
+                    break;
+                case TicketStates.TICKET_RETURNED: // "Vracen"
+                    createTicketButton.Enabled = false;
+                    respondButton.Enabled = true;
 
-            if (result.Item1) {
-                ticketTitleLabel.Text = ticketData.Title;
-                ticketContentLabel.Text = ticketData.Content;
-                ticketStateLabel.Text = ticketData.Status;
+                    ticketTitleLabel.ForeColor = Color.Black;
+                    ticketStatusLabel.ForeColor = Color.Orange;
+                    break;
+                case TicketStates.NO_TICKETS: // "Nema"
+                    createTicketButton.Enabled = true;
+                    respondButton.Enabled = false;
+
+                    ticketTitleLabel.ForeColor = Color.Red;
+                    ticketStatusLabel.ForeColor = Color.Black;
+                    break;
+                default:
+                    Debug.WriteLine("Undefined UpdateButtonStates() call.");
+                    break;
             }
         }
 
-        public MainForm() {
+        private void FailedLoginCloseOnStart(object sender, EventArgs e) => Close();
+
+        private void StartTimedAction(string key, Action action, float seconds, bool periodic) {
+            // nastaje "curenje tajmera" ako dozvolimo duplikate jer se gubi referenca na jednog
+            if (activeTimers.ContainsKey(key)) return;
+
+            var timer = new System.Timers.Timer(seconds * 1000);
+            timer.Elapsed += (s, args) => {
+                try {
+                    Invoke(new Action(action));
+                }
+                catch { }
+                // periodic == true -> akcija se izvrsava jednom
+                // periodic == false -> akcija se izvrsava periodicno do Application.Exit()
+                if (!periodic) {
+                    timer.Stop();
+                    timer.Dispose();
+                }
+            };
+            timer.Start();
+
+            // dodajemo tajmer u mapu kako bismo ga mogli kasnije adresirati za gasenje
+            activeTimers[key] = timer;
+        }
+
+        private void StopTimedAction(string key) {
+            // trazimo tajmer po kljucu i vracamo ga po referenci iz argumenta funkcije ispod
+            if (activeTimers.TryGetValue(key, out var timer)) {
+                timer.Stop();
+                timer.Dispose();
+                activeTimers.Remove(key);
+            }
+        }
+
+        private void DisplayTicketData() {
+            (bool, TicketData) lookupResult = fm.LookupTicket(LoginForm.loggedInAccountUsername);
+            TicketData ticketData = lookupResult.Item2;
+
+            if (lookupResult.Item1) {
+                if (ticketData.Status == "Vracen")
+                    UpdateButtonStates(TicketStates.TICKET_RETURNED);
+                else if (ticketData.Status == "Otvoren")
+                    UpdateButtonStates(TicketStates.TICKET_OPEN);
+                else if (ticketData.Status == "Dodijeljen operateru")
+                    UpdateButtonStates(TicketStates.TICKET_ASSIGNED);
+
+                activeTicketExists = true;
+            }
+            else {
+                UpdateButtonStates(TicketStates.NO_TICKETS);
+                activeTicketExists = false;
+                ticketData = Constants.ticketDataPlaceholder;
+            }
+
+            ticketTitleLabel.Text = ticketData.Title;
+            ticketContentLabel.Text = ticketData.Content;
+            ticketStatusLabel.Text = ticketData.Status;
+            ticketOperatorLabel.Text = ticketData.AssignedOperatorName;
+        }
+
+        private void Login() {
             // ako korisnik nije vec prijavljen, prikazati formu za prijavu
             if (!isLoggedIn)
                 new LoginForm().ShowDialog();
@@ -74,6 +164,13 @@ namespace User {
                     new ConsentForm().ShowDialog();
             }
 
+            // pocetak periodicnog azuriranja statusa tiketa svaki sekund
+            StartTimedAction("ticketAutoRefresh", DisplayTicketData, 0.5f, true);
+        }
+
+        public MainForm() {
+            Login();
+
             InitializeComponent();
             SetDefaultWindowSettings();
             FillStaticConstants();
@@ -94,7 +191,7 @@ namespace User {
 
         // "Arhivirani tiketi" dugme
         private void archivedTicketsButton_Click(object sender, EventArgs e) {
-            
+
         }
 
         // "Refresh" dugme
@@ -102,6 +199,58 @@ namespace User {
             DisplayTicketData();
         }
 
+        private void autoRefreshCheckBox_CheckedChanged(object sender, EventArgs e) {
+            refreshButton.Enabled = !autoRefreshCheckBox.Checked;
+
+            if (!autoRefreshCheckBox.Checked)
+                StopTimedAction("ticketAutoRefresh");
+            else
+                StartTimedAction("ticketAutoRefresh", DisplayTicketData, 0.5f, true);
+        }
+
+        private static bool firstPress = true;
+        private void logoutExitButton_Click(object sender, EventArgs e) {
+            // dvostruka potvrda pritisnutog dugmeta
+            if (firstPress) {
+                firstPress = false;
+                logoutExitButton.ForeColor = Color.Red;
+
+                activeTimers.Remove("logoutConfirmation");
+                // ukoliko prodje sekund bez drugog (potvrdnog) klika, stanje se resetuje
+                StartTimedAction("logoutConfirmation", () => {
+                    firstPress = true;
+                    logoutExitButton.ForeColor = Color.Black;
+                }, 0.5f, false);
+            }
+            else {
+                Close();
+                Application.Exit();
+            }
+        }
+
+        private void accountSettingsButton_Click(object sender, EventArgs e) {
+            new AccountSettingsForm().ShowDialog();
+        }
+
+        // pri zatvaranju forme ugasiti svaki tajmer jer po nekad dolazi do greske ako
+        // zatvorimo aplikaciju u trenutku kada se poziva periodicni tajmer
+        protected override void OnFormClosed(FormClosedEventArgs e) {
+            base.OnFormClosed(e);
+            foreach (var timer in activeTimers.Values) {
+                timer.Stop();
+                timer.Dispose();
+            }
+            activeTimers.Clear();
+        }
+
         private void label2_Click(object sender, EventArgs e) { }
+
+        private void ticketStatusLabel_Click(object sender, EventArgs e) {
+
+        }
+
+        private void ticketOperatorLabel_Click(object sender, EventArgs e) {
+
+        }
     }
 }

@@ -2,10 +2,16 @@ CLIENT=jovanjovanovic
 TITLE=Nema interneta
 CONTENT=Vec 2 dana nemam internet. Redovno placam ogroman ugovor i nema smisla da imam ove probleme kad mi za posao treba pristup internetu 24/7.
 ASSIGNED_OPERATOR=ivanivanovic
-STATUS=forwarded
+STATUS=Otvoren
 
 CLIENT=markomarkovic
 TITLE=Nema televizije
 CONTENT=Placam najskuplji paket za TV sa svim mogucim dodatnim bibliotekama, a tri puna dana ne radi. Juce mi je operater rekao da pisem opet ako ne dodje do danas.
 ASSIGNED_OPERATOR=
-STATUS=opened
+STATUS=Otvoren
+
+CLIENT=a
+TITLE=test test 123
+CONTENT=radi ne radi radi ne radi
+ASSIGNED_OPERATOR=ivanivanovic
+STATUS=Otvoren

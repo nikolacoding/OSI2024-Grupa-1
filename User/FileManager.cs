@@ -15,8 +15,8 @@ namespace User {
         (bool, TicketData) LookupTicket(string username);
     }
 
-    interface IOutput { 
-
+    interface IOutput {
+        bool ModifyAccountPassword(string username, string currentPassword, string newPassword);
     }
 
     public sealed class FileManager : IInput, IOutput {
@@ -73,6 +73,9 @@ namespace User {
             string targetFile = Constants.ticketsFile;
             string key = "CLIENT=" + username;
 
+            // default povratne vrijednosti
+            (bool, TicketData) returnTuple = (false, Constants.ticketDataPlaceholder);
+
             // da li postoji /Data folder
             if (Directory.Exists(dataFolder)) {
                 string[] files = Directory.GetFiles(dataFolder);
@@ -94,6 +97,7 @@ namespace User {
                             string line = lines[i];
                             // ako smo nasli trazenu liniju, citamo narednih N sa ostalim sadrzajem
                             if (line == key) {
+                                returnTuple.Item1 = true;
                                 for (int j = 0; j < linesToRead; j++) {
                                     string relevantLine = lines[i + j];
                                     relevantLines[j] = GetAttributeValue(relevantLine);
@@ -104,15 +108,16 @@ namespace User {
                             ClientName = relevantLines[0],
                             Title = relevantLines[1],
                             Content = relevantLines[2],
-                            Status = relevantLines[3],
-                            AssignedOperatorName = relevantLines[4],
+                            AssignedOperatorName = relevantLines[3],
+                            Status = relevantLines[4],
                         };
 
-                        return (true, ticketData);
+                        if (returnTuple.Item1)
+                            returnTuple.Item2 = ticketData;
                     }
                 }
             }
-            return (false, Constants.ticketDataPlaceholder);
+            return returnTuple;
         }
 
         public static bool CheckForAccountInFile(string clampedCreds, string username, string password) {
@@ -133,6 +138,37 @@ namespace User {
 
             // npr. ulaz "ATTRIBUTE_NAME=Attribute_Value" vraca "Attribute_Value"
             return parts.Length != 2 ? null : parts[1];
+        }
+
+        public bool ModifyAccountPassword(string username, string currentPassword, string newPassword) {
+            string dataFolder = Constants.dataFolder;
+
+            Debug.WriteLine("username: " + username + "; " +
+                            "currentpassword: " + currentPassword + "; " +
+                            "newpassword: " + newPassword);
+
+            // otvara svaki fajl u Data folderu i trazi dati username
+            if (Directory.Exists(dataFolder)) {
+                string[] files = Directory.GetFiles(dataFolder);
+                foreach (var file in files) {
+                    string[] lines = File.ReadAllLines(file);
+                    for (int i = 0; i < lines.Length; i++) {
+                        string currentLine = lines[i];
+                        if (currentLine == username + ":" + currentPassword) {
+                            Debug.WriteLine("found: " + currentLine);
+                            string newLine = username + ":" + newPassword;
+                            lines[i] = newLine;
+                            File.WriteAllLines(file, lines);
+                            return true;
+                        }
+                    }
+                }
+            }
+            else {
+                Debug.WriteLine("Data folder not found.");
+            }
+
+            return false;
         }
     }
 }

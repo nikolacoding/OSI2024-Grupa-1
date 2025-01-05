@@ -32,11 +32,11 @@ namespace User {
         private static readonly string windowTitlePlaceholder = "Korisnička podrška - {0}";
 
         public static readonly TicketData ticketDataPlaceholder = new TicketData {
-            ClientName = "{client}",
-            Title = "{title}",
-            Content = "{content}",
-            Status = "{status}",
-            AssignedOperatorName = "{operator}"
+            ClientName = "",
+            Title = "Nema",
+            Content = "",
+            Status = "-",
+            AssignedOperatorName = "-"
         };
 
         // Generalizovati ovo

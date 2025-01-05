@@ -17,6 +17,7 @@ namespace User {
         // s obzirom da moze biti samo jedan ulogovan korisnik i on mora da se uloguje svaki
         // put kada pokrece aplikaciju
         public static string loggedInAccountUsername = "{username}";
+        public static string loggedInAccountPassword = "{password}";
         public static bool loginSuccessful = false;
 
         public LoginForm() {
@@ -54,6 +55,7 @@ namespace User {
                 // da li imamo aktivnu LoginForm instancu ili ne i omogucava nam da iz svake
                 // ostale forme i konteksta pokupimo username trenutno prijavljenog korisnika
                 loggedInAccountUsername = usernameBox.Text;
+                loggedInAccountPassword = passwordBox.Text;
                 loginSuccessful = true;
                 loginSuccessSound.Play();
                 Close();

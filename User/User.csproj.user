@@ -4,6 +4,9 @@
     <_LastSelectedProfileId>X:\Projekti\OSI2024\User\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="AccountSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ConsentForm.cs">
       <SubType>Form</SubType>
     </Compile>

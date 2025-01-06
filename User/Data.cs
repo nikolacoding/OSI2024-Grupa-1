@@ -13,4 +13,10 @@ namespace Data {
         public string Status { get; set; }
         public string AssignedOperatorName { get; set; }
     }
+
+    public struct ClientData {
+        public string ClientName { get; set; }
+        public string ConsentGiven { get; set; }
+        public string FirstLogin { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,7 @@ namespace User {
         // put kada pokrece aplikaciju
         public static string loggedInAccountUsername = "{username}";
         public static string loggedInAccountPassword = "{password}";
+        public static ClientData loggedInAccountData;
         public static bool loginSuccessful = false;
 
         public LoginForm() {
@@ -34,7 +36,7 @@ namespace User {
         }
 
         public void FillStaticConstants() {
-            Text = constants.GetFormWindowTitle("FIRMNAME");
+            Text = constants.GetFormWindowTitle();
             loginStatusLabel.Text = "";
         }
 
@@ -53,6 +55,8 @@ namespace User {
                 // ostale forme i konteksta pokupimo username trenutno prijavljenog korisnika;
                 loggedInAccountUsername = usernameBox.Text;
                 loggedInAccountPassword = passwordBox.Text;
+                loggedInAccountData = fm.GetClientData(loggedInAccountUsername);
+
                 loginSuccessful = true;
                 SoundEngine.successSound.Play();
                 Close();

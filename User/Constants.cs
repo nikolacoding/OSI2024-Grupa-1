@@ -18,10 +18,12 @@ namespace User {
         private static readonly string projFolder = Path.GetFullPath(Path.Combine(baseDir, pathPrefix));
         
         public static readonly string dataFolder = Path.Combine(projFolder, "Data");
-        public static readonly string accountsFile = "UserAccounts.txt";
+        public static readonly string clientAccountsFile = "ClientAccounts.txt";
+        public static readonly string clientDataFile = "ClientData.txt";
         public static readonly string globaldataFile = "GlobalData.txt";
         public static readonly string ticketsFile = "Tickets.txt";
 
+        public static readonly int clientDataEntryLength = 3;
         public static readonly int ticketTitleMaxChars = 30;
         public static readonly int ticketContentMaxChars = 250;
 
@@ -43,17 +45,23 @@ namespace User {
             AssignedOperatorName = "-"
         };
 
+        public static readonly Dictionary<string, string> clientDataAttributeLiterals = new() {
+            { "name", "CLIENT=" },
+            { "login", "FIRST_LOGIN=" },
+            { "consent", "CONSENT_GIVEN=" },
+        };
+
         // Generalizovati ovo
         public string GetConsentText(string firmNameAttribute) {
-            string? firmName = fm.LookupAttribute(globaldataFile, firmNameAttribute);
+            string? firmName = fm.LookupGlobalAttribute(firmNameAttribute);
             if (firmName == null) 
                 return consentTextPlaceholder;
             else
                 return string.Format(consentTextPlaceholder, firmName, LoginForm.loggedInAccountUsername);
         }
 
-        public string GetFormWindowTitle(string firmNameAttribute) {
-            string? firmName = fm.LookupAttribute(globaldataFile, firmNameAttribute);
+        public string GetFormWindowTitle() {
+            string? firmName = fm.LookupGlobalAttribute("FIRMNAME");
             if (firmName == null)
                 return windowTitlePlaceholder;
             else

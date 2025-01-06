@@ -12,6 +12,7 @@ using System.Windows.Forms;
 namespace User {
     public partial class ConsentForm : Form, Interfaces.IInitializable {
         readonly private Constants constants = new();
+        readonly private FileManager fm = new();
 
         // IInitializable
         public void SetDefaultWindowSettings() {
@@ -45,6 +46,7 @@ namespace User {
 
         // "Nastavi" dugme
         private void consentButton_click(object sender, EventArgs e) {
+            fm.UpdateDataAttributeForAccount("CONSENT_GIVEN", LoginForm.loggedInAccountUsername, 1);
             Close();
         }
 

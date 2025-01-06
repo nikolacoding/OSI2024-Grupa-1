@@ -69,6 +69,7 @@
             Controls.Add(consentButton);
             Controls.Add(consentCheckBox);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ConsentForm";
             Text = "Uslovi korišćenja";
             ResumeLayout(false);

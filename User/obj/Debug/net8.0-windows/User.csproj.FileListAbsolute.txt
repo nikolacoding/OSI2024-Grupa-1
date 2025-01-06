@@ -20,3 +20,4 @@ X:\Projekti\OSI2024\User\obj\Debug\net8.0-windows\User.LoginForm.resources
 X:\Projekti\OSI2024\User\obj\Debug\net8.0-windows\User.AccountSettingsForm.resources
 X:\Projekti\OSI2024\User\obj\Debug\net8.0-windows\User.ArchivedTicketList.resources
 X:\Projekti\OSI2024\User\obj\Debug\net8.0-windows\User.CreateTicketForm.resources
+X:\Projekti\OSI2024\User\obj\Debug\net8.0-windows\User.RespondTicketForm.resources

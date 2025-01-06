@@ -78,7 +78,7 @@
             ticketContentLabel.BorderStyle = BorderStyle.FixedSingle;
             ticketContentLabel.FlatStyle = FlatStyle.Flat;
             ticketContentLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ticketContentLabel.Location = new Point(349, 198);
+            ticketContentLabel.Location = new Point(354, 198);
             ticketContentLabel.MaximumSize = new Size(600, 135);
             ticketContentLabel.Name = "ticketContentLabel";
             ticketContentLabel.Size = new Size(314, 123);
@@ -98,6 +98,7 @@
             // 
             // archivedTicketsButton
             // 
+            archivedTicketsButton.Enabled = false;
             archivedTicketsButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             archivedTicketsButton.Location = new Point(540, 12);
             archivedTicketsButton.Name = "archivedTicketsButton";
@@ -225,6 +226,7 @@
             Controls.Add(ticketTitleLabel);
             Controls.Add(label1);
             Controls.Add(createTicketButton);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainForm";
             Text = "Korisnička podrška";
             ResumeLayout(false);

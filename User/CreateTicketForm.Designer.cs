@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTicketForm));
             clientNameTextBox = new TextBox();
             titleTextBox = new TextBox();
             contentTextBox = new TextBox();
@@ -49,6 +50,7 @@
             // 
             titleTextBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             titleTextBox.Location = new Point(148, 72);
+            titleTextBox.MaxLength = 40;
             titleTextBox.Name = "titleTextBox";
             titleTextBox.PlaceholderText = "Ne radi mi...";
             titleTextBox.Size = new Size(250, 27);
@@ -60,10 +62,11 @@
             contentTextBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             contentTextBox.Location = new Point(12, 153);
             contentTextBox.MaximumSize = new Size(300, 0);
+            contentTextBox.MaxLength = 300;
             contentTextBox.Multiline = true;
             contentTextBox.Name = "contentTextBox";
             contentTextBox.PlaceholderText = "Nemam ovu uslugu vec 2 dana...";
-            contentTextBox.Size = new Size(283, 128);
+            contentTextBox.Size = new Size(283, 149);
             contentTextBox.TabIndex = 2;
             contentTextBox.TextChanged += contentTextBox_TextChanged;
             // 
@@ -110,7 +113,7 @@
             // createButton
             // 
             createButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            createButton.Location = new Point(312, 249);
+            createButton.Location = new Point(312, 270);
             createButton.Name = "createButton";
             createButton.Size = new Size(86, 32);
             createButton.TabIndex = 7;
@@ -121,7 +124,7 @@
             // statusLabel
             // 
             statusLabel.AutoSize = true;
-            statusLabel.Location = new Point(16, 292);
+            statusLabel.Location = new Point(12, 311);
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(166, 15);
             statusLabel.TabIndex = 8;
@@ -133,7 +136,7 @@
             titleCharCounter.Name = "titleCharCounter";
             titleCharCounter.Size = new Size(36, 15);
             titleCharCounter.TabIndex = 9;
-            titleCharCounter.Text = "28/30";
+            titleCharCounter.Text = "0/30";
             titleCharCounter.TextAlign = ContentAlignment.MiddleRight;
             // 
             // contentCharCounter
@@ -142,14 +145,14 @@
             contentCharCounter.Name = "contentCharCounter";
             contentCharCounter.Size = new Size(49, 15);
             contentCharCounter.TabIndex = 10;
-            contentCharCounter.Text = "174/250";
+            contentCharCounter.Text = "0/250";
             contentCharCounter.TextAlign = ContentAlignment.MiddleRight;
             // 
             // CreateTicketForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(404, 317);
+            ClientSize = new Size(404, 335);
             Controls.Add(contentCharCounter);
             Controls.Add(titleCharCounter);
             Controls.Add(statusLabel);
@@ -161,6 +164,7 @@
             Controls.Add(contentTextBox);
             Controls.Add(titleTextBox);
             Controls.Add(clientNameTextBox);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CreateTicketForm";
             Text = "Kreiraj tiket";
             ResumeLayout(false);

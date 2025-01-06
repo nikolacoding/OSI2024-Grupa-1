@@ -12,6 +12,7 @@ namespace Data {
         public string Content { get; set; }
         public string Status { get; set; }
         public string AssignedOperatorName { get; set; }
+        public string OperatorResponse { get; set; }
     }
 
     public struct ClientData {

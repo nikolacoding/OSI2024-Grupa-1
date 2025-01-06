@@ -39,7 +39,7 @@ namespace User {
 
         public void SetDefaultStates() {
             DisplayTicketData();
-            archivedTicketsButton.Enabled = true;
+            archivedTicketsButton.Enabled = false;
             refreshButton.Enabled = true;
             accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
             autoRefreshCheckBox.Checked = true;
@@ -147,11 +147,11 @@ namespace User {
             TicketData ticketData = lookupResult.Item2;
 
             if (lookupResult.Item1) {
-                if (ticketData.Status == "Vracen")
+                if (ticketData.Status == Constants.ticketStatusLiterals["returned"])
                     UpdateButtonStates(TicketStates.TICKET_RETURNED);
-                else if (ticketData.Status == "Otvoren")
+                else if (ticketData.Status == Constants.ticketStatusLiterals["opened"])
                     UpdateButtonStates(TicketStates.TICKET_OPEN);
-                else if (ticketData.Status == "Dodijeljen operateru")
+                else if (ticketData.Status == Constants.ticketStatusLiterals["assigned"])
                     UpdateButtonStates(TicketStates.TICKET_ASSIGNED);
 
                 activeTicketExists = true;
@@ -204,7 +204,7 @@ namespace User {
 
         // "Odgovori" dugme
         private void respondButton_Click(object sender, EventArgs e) {
-
+            new RespondTicketForm().Show();
         }
 
         // "Arhivirani tiketi" dugme

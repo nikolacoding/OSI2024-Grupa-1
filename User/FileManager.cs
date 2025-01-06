@@ -22,6 +22,7 @@ namespace User {
     interface IOutput {
         bool ModifyAccountPassword(string username, string currentPassword, string newPassword);
         void CreateTicket(TicketData data);
+        void ChangeTicketAttribute(string clientName, string attribute, string newValue);
         void UpdateDataAttributeForAccount(string attribute_name, string username, int to);
     }
 
@@ -92,14 +93,14 @@ namespace User {
         public (bool, TicketData) LookupTicket(string username) {
             // ticketsFile
             string targetFile = Constants.ticketsFile;
-            string key = Constants.clientDataAttributeLiterals["name"] + username;
+            string key = Constants.commonAttributeLiterals["name"] + username;
 
             // default povratne vrijednosti
             (bool, TicketData) returnTuple = (false, Constants.ticketDataPlaceholder);
 
             string[] lines = GetLinesFromFile(targetFile);
             int linesSize = lines.Length;
-            int linesToRead = 5;
+            int linesToRead = Constants.ticketDataEntryLength;
             string[] relevantLines = new string[linesToRead];
 
             for (int i = 0; i < linesSize; i++) {
@@ -120,6 +121,7 @@ namespace User {
                 Content = relevantLines[2],
                 AssignedOperatorName = relevantLines[3],
                 Status = relevantLines[4],
+                OperatorResponse = relevantLines[5],
             };
 
             if (returnTuple.Item1)
@@ -135,7 +137,7 @@ namespace User {
 
             for (int i = 0; i < lines.Length; i++) {
                 string currentLine = lines[i];
-                if (currentLine == Constants.clientDataAttributeLiterals["name"] + username) 
+                if (currentLine == Constants.commonAttributeLiterals["name"] + username) 
                     for (int j = 0; j < Constants.clientDataEntryLength; j++)
                         relevantLines[j] = GetAttributeValue(lines[i + j]);
             }
@@ -173,13 +175,47 @@ namespace User {
             string dataFolder = Constants.dataFolder;
             string targetFile = Path.Combine(dataFolder,  Constants.ticketsFile);
 
-            Debug.WriteLine(targetFile);
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["name"]
+                + data.ClientName + "\n");
 
-            File.AppendAllText(targetFile, "CLIENT=" + data.ClientName + "\n");
-            File.AppendAllText(targetFile, "TITLE=" + data.Title + "\n");
-            File.AppendAllText(targetFile, "CONTENT=" + data.Content + "\n");
-            File.AppendAllText(targetFile, "ASSIGNED_OPERATOR=" + data.AssignedOperatorName + "\n");
-            File.AppendAllText(targetFile, "STATUS=" + data.Status + "\n\n");
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["title"] 
+                + data.Title + "\n");
+
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["content"]
+                + data.Content + "\n");
+
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["operator"] 
+                + data.AssignedOperatorName + "\n");
+
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["status"]
+                + data.Status + "\n");
+
+            File.AppendAllText(targetFile, Constants.commonAttributeLiterals["response"] + 
+                data.OperatorResponse + "\n\n");
+        }
+
+        public void ChangeTicketAttribute(string clientName, string attribute, string newValue) {
+            string dataFolder = Constants.dataFolder;
+            string targetFile = Constants.ticketsFile;
+            string writePath = Path.Combine(dataFolder, targetFile);
+
+            string[] lines = GetLinesFromFile(targetFile);
+            string targetLine = Constants.commonAttributeLiterals["name"] + clientName;
+            for (int i = 0; i < lines.Length; i++) {
+                string line = lines[i];
+                if (line == targetLine) {
+                    for (int j = 0; j < Constants.ticketDataEntryLength; j++) {
+                        string offsetLine = lines[i + j];
+                        if (GetAttributeName(offsetLine) == attribute) {
+                            lines[i + j] = attribute + "=" + newValue;
+                            goto END;
+                        }
+
+                    }
+                }
+            }
+        END:
+            File.WriteAllLines(writePath, lines);
         }
 
         public void UpdateDataAttributeForAccount(string attributeName, string username, int to) {
@@ -192,7 +228,7 @@ namespace User {
 
             for (int i = 0; i < lines.Length; i++) {
                 string line = lines[i];
-                if (line == Constants.clientDataAttributeLiterals["name"] + username) {
+                if (line == Constants.commonAttributeLiterals["name"] + username) {
                     for (int j = 0; j < Constants.clientDataEntryLength; j++) {
                         Debug.WriteLine("comparing: {0} <-> {1}", attributeName, GetAttributeName(lines[i + j]));
                         if (attributeName == GetAttributeName(lines[i + j])) {

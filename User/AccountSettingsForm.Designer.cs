@@ -31,6 +31,7 @@
             currentPasswordTextbox = new TextBox();
             confirmPasswordChangeButton = new Button();
             currentUsernameLabel = new Label();
+            statusLabel = new Label();
             SuspendLayout();
             // 
             // label5
@@ -55,41 +56,47 @@
             // 
             // newPasswordTextbox
             // 
-            newPasswordTextbox.Location = new Point(164, 129);
+            newPasswordTextbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            newPasswordTextbox.Location = new Point(176, 141);
             newPasswordTextbox.Name = "newPasswordTextbox";
-            newPasswordTextbox.Size = new Size(120, 23);
+            newPasswordTextbox.Size = new Size(136, 27);
             newPasswordTextbox.TabIndex = 11;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(55, 103);
+            label10.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.Location = new Point(38, 107);
             label10.Name = "label10";
-            label10.Size = new Size(96, 15);
+            label10.Size = new Size(120, 20);
             label10.TabIndex = 10;
             label10.Text = "Trenutna lozinka:";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(73, 133);
+            label11.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label11.Location = new Point(60, 144);
             label11.Name = "label11";
-            label11.Size = new Size(78, 15);
+            label11.Size = new Size(98, 20);
             label11.TabIndex = 9;
             label11.Text = "Nova lozinka:";
             // 
             // currentPasswordTextbox
             // 
-            currentPasswordTextbox.Location = new Point(164, 100);
+            currentPasswordTextbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            currentPasswordTextbox.Location = new Point(176, 104);
             currentPasswordTextbox.Name = "currentPasswordTextbox";
-            currentPasswordTextbox.Size = new Size(120, 23);
+            currentPasswordTextbox.Size = new Size(136, 27);
             currentPasswordTextbox.TabIndex = 8;
+            currentPasswordTextbox.TextChanged += currentPasswordTextbox_TextChanged;
             // 
             // confirmPasswordChangeButton
             // 
-            confirmPasswordChangeButton.Location = new Point(209, 162);
+            confirmPasswordChangeButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            confirmPasswordChangeButton.Location = new Point(232, 183);
             confirmPasswordChangeButton.Name = "confirmPasswordChangeButton";
-            confirmPasswordChangeButton.Size = new Size(75, 23);
+            confirmPasswordChangeButton.Size = new Size(88, 32);
             confirmPasswordChangeButton.TabIndex = 15;
             confirmPasswordChangeButton.Text = "Potvrdi";
             confirmPasswordChangeButton.UseVisualStyleBackColor = true;
@@ -105,11 +112,21 @@
             currentUsernameLabel.Text = "username";
             currentUsernameLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.Location = new Point(12, 203);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(96, 15);
+            statusLabel.TabIndex = 17;
+            statusLabel.Text = "Pogresna lozinka";
+            // 
             // AccountSettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(287, 195);
+            ClientSize = new Size(332, 227);
+            Controls.Add(statusLabel);
             Controls.Add(currentUsernameLabel);
             Controls.Add(confirmPasswordChangeButton);
             Controls.Add(label7);
@@ -133,5 +150,6 @@
         private TextBox currentPasswordTextbox;
         private Button confirmPasswordChangeButton;
         private Label currentUsernameLabel;
+        private Label statusLabel;
     }
 }

@@ -19,7 +19,11 @@ namespace User {
         
         public static readonly string dataFolder = Path.Combine(projFolder, "Data");
         public static readonly string accountsFile = "UserAccounts.txt";
+        public static readonly string globaldataFile = "GlobalData.txt";
         public static readonly string ticketsFile = "Tickets.txt";
+
+        public static readonly int ticketTitleMaxChars = 30;
+        public static readonly int ticketContentMaxChars = 250;
 
         private static readonly string consentTextPlaceholder = "Prije upotrebe korisničke " +
             "podrške za {0}, ja, {1}, garantujem sljedeće:\r\n\r\n" +
@@ -41,7 +45,7 @@ namespace User {
 
         // Generalizovati ovo
         public string GetConsentText(string firmNameAttribute) {
-            string? firmName = fm.LookupAttribute(firmNameAttribute);
+            string? firmName = fm.LookupAttribute(globaldataFile, firmNameAttribute);
             if (firmName == null) 
                 return consentTextPlaceholder;
             else
@@ -49,7 +53,7 @@ namespace User {
         }
 
         public string GetFormWindowTitle(string firmNameAttribute) {
-            string? firmName = fm.LookupAttribute(firmNameAttribute);
+            string? firmName = fm.LookupAttribute(globaldataFile, firmNameAttribute);
             if (firmName == null)
                 return windowTitlePlaceholder;
             else

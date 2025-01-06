@@ -47,22 +47,19 @@ namespace User {
         private readonly Constants constants = new();
 
         private void loginButton_Click(object sender, EventArgs e) {
-            SoundPlayer loginFailSound = new SoundPlayer(@"C:\Windows\Media\Windows Error.wav");
-            SoundPlayer loginSuccessSound = new SoundPlayer(@"C:\Windows\Media\Windows Unlock.wav");
-
             if (fm.LookupAccount(usernameBox.Text, passwordBox.Text)) {
-                // setujemo staticku promjenljivu loggedInAccountUsername koja zivi bez obzira
+                // setujemo staticke promjenljive za cuvanje imena i lozinke koje zive bez obzira
                 // da li imamo aktivnu LoginForm instancu ili ne i omogucava nam da iz svake
-                // ostale forme i konteksta pokupimo username trenutno prijavljenog korisnika
+                // ostale forme i konteksta pokupimo username trenutno prijavljenog korisnika;
                 loggedInAccountUsername = usernameBox.Text;
                 loggedInAccountPassword = passwordBox.Text;
                 loginSuccessful = true;
-                loginSuccessSound.Play();
+                SoundEngine.successSound.Play();
                 Close();
             }
             else {
                 loginStatusLabel.Text = "Neispravno ime ili lozinka.";
-                loginFailSound.Play();
+                SoundEngine.failSound.Play();
             }
         }
 

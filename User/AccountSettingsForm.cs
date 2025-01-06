@@ -30,19 +30,25 @@ namespace User {
         public void SetDefaultStates() {
             currentPasswordTextbox.PasswordChar = '*';
             newPasswordTextbox.PasswordChar = '*';
+            statusLabel.ForeColor = Color.Red;
+            statusLabel.Text = "";
         }
         // #IInitializable
 
         private void confirmPasswordChangeButton_Click(object sender, EventArgs e) {
-            if (fm.ModifyAccountPassword(LoginForm.loggedInAccountUsername, 
+            if (fm.ModifyAccountPassword(LoginForm.loggedInAccountUsername,
                 currentPasswordTextbox.Text, newPasswordTextbox.Text)) {
                 // ^ uspjesna modifikacija
 
+                SoundEngine.successSound.Play();
                 Close();
             }
             else {
-                confirmPasswordChangeButton.ForeColor = Color.Red;
+                statusLabel.Text = "Pogrešna lozinka.";
+                SoundEngine.failSound.Play();
             }
         }
+
+        private void currentPasswordTextbox_TextChanged(object sender, EventArgs e) { }
     }
 }

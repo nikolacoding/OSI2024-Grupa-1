@@ -61,6 +61,10 @@ namespace User {
                 SoundEngine.failSound.Play();
                 statusLabel.Text = "Naslov i/ili sadržaj su previše dugački.";
             }
+            else if (titleLen <= 0 || contentLen <= 0) {
+                SoundEngine.failSound.Play();
+                statusLabel.Text = "Naslov i/ili sadržaj su prazni.";
+            }
             else {
                 TicketData data = new TicketData {
                     ClientName = LoginForm.loggedInAccountUsername,
@@ -68,6 +72,7 @@ namespace User {
                     Content = contentTextBox.Text,
                     AssignedOperatorName = "",
                     Status = "Otvoren",
+                    OperatorResponse = "",
                 };
 
                 fm.CreateTicket(data);

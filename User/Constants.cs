@@ -24,6 +24,7 @@ namespace User {
         public static readonly string ticketsFile = "Tickets.txt";
 
         public static readonly int clientDataEntryLength = 3;
+        public static readonly int ticketDataEntryLength = 6;
         public static readonly int ticketTitleMaxChars = 30;
         public static readonly int ticketContentMaxChars = 250;
 
@@ -42,13 +43,26 @@ namespace User {
             Title = "Nema",
             Content = "",
             Status = "-",
-            AssignedOperatorName = "-"
+            AssignedOperatorName = "-",
+            OperatorResponse = "-",
         };
 
-        public static readonly Dictionary<string, string> clientDataAttributeLiterals = new() {
+        public static readonly Dictionary<string, string> commonAttributeLiterals = new() {
             { "name", "CLIENT=" },
+            { "title", "TITLE=" },
+            { "operator", "ASSIGNED_OPERATOR=" },
+            { "response", "OPERATOR_RESPONSE=" },
             { "login", "FIRST_LOGIN=" },
             { "consent", "CONSENT_GIVEN=" },
+            { "content", "CONTENT=" },
+            { "status", "STATUS=" },
+        };
+
+        public static readonly Dictionary<string, string> ticketStatusLiterals = new() {
+            { "opened", "Otvoren" },
+            { "assigned", "Dodijeljen operateru" },
+            { "returned", "Vracen" },
+            { "closed", "Zatvoren" },
         };
 
         // Generalizovati ovo

@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArchivedTicketList));
             SuspendLayout();
             // 
             // ArchivedTicketList
@@ -30,6 +31,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(917, 412);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ArchivedTicketList";
             Text = "Arhivirani tiketi";
             ResumeLayout(false);

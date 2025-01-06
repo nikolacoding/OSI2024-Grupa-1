@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountSettingsForm));
             titleLabel = new Label();
             label7 = new Label();
             newPasswordTextbox = new TextBox();
@@ -135,6 +136,7 @@
             Controls.Add(label11);
             Controls.Add(currentPasswordTextbox);
             Controls.Add(titleLabel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AccountSettingsForm";
             Text = "Postavke naloga";
             ResumeLayout(false);

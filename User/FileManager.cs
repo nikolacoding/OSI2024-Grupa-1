@@ -4,23 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 using Data;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 #nullable disable
 namespace User {
 
     interface IInput {
         bool LookupAccount(string username, string password);
-        string? LookupAttribute(string targetFile, string attributeName);
-        (bool, TicketData) LookupTicket(string targetFile, string username);
+        string? LookupGlobalAttribute(string attributeName);
+        (bool, TicketData) LookupTicket(string username);
+        ClientData GetClientData(string username);
     }
 
     interface IOutput {
         bool ModifyAccountPassword(string username, string currentPassword, string newPassword);
         void CreateTicket(TicketData data);
+        void UpdateDataAttributeForAccount(string attribute_name, string username, int to);
     }
 
     public sealed class FileManager : IInput, IOutput {
@@ -66,7 +68,7 @@ namespace User {
 
         // IInput
         public bool LookupAccount(string username, string password) {
-            string targetFile = Constants.accountsFile;
+            string targetFile = Constants.clientAccountsFile;
             string[] lines = GetLinesFromFile(targetFile);
 
             if (lines != null)
@@ -76,7 +78,8 @@ namespace User {
             return false;
         }
 
-        public string? LookupAttribute(string targetFile, string attributeName) {
+        public string? LookupGlobalAttribute(string attributeName) {
+            string targetFile = Constants.globaldataFile;
             string[] lines = GetLinesFromFile(targetFile);
 
             if (lines != null)
@@ -86,10 +89,10 @@ namespace User {
             return null;
         }
 
-        public (bool, TicketData) LookupTicket(string targetFile, string username) {
+        public (bool, TicketData) LookupTicket(string username) {
             // ticketsFile
-            string dataFolder = Constants.dataFolder;
-            string key = "CLIENT=" + username;
+            string targetFile = Constants.ticketsFile;
+            string key = Constants.clientDataAttributeLiterals["name"] + username;
 
             // default povratne vrijednosti
             (bool, TicketData) returnTuple = (false, Constants.ticketDataPlaceholder);
@@ -124,21 +127,41 @@ namespace User {
 
             return returnTuple;
         }
+
+        public ClientData GetClientData(string username) {
+            string targetFile = Constants.clientDataFile;
+            string[] lines = GetLinesFromFile(targetFile);
+            string[] relevantLines = new string[Constants.clientDataEntryLength];
+
+            for (int i = 0; i < lines.Length; i++) {
+                string currentLine = lines[i];
+                if (currentLine == Constants.clientDataAttributeLiterals["name"] + username) 
+                    for (int j = 0; j < Constants.clientDataEntryLength; j++)
+                        relevantLines[j] = GetAttributeValue(lines[i + j]);
+            }
+
+            return new ClientData {
+                ClientName = relevantLines[0],
+                FirstLogin = relevantLines[1],
+                ConsentGiven = relevantLines[2],
+            };
+        }
         // #IInput
 
         // IOutput
         public bool ModifyAccountPassword(string username, string currentPassword, string newPassword) {
             string dataFolder = Constants.dataFolder;
-            string targetFolder = Constants.accountsFile;
-            string[] lines = GetLinesFromFile(targetFolder);
+            string targetFile = Constants.clientAccountsFile;
+            string writePath = Path.Combine(dataFolder, targetFile);
+            string[] lines = GetLinesFromFile(targetFile);
 
             for (int i = 0; i < lines.Length; i++) {
                 string currentLine = lines[i];
                 if (currentLine == username + ":" + currentPassword) {
                     string newLine = username + ":" + newPassword;
                     lines[i] = newLine;
-                    string file = Path.Combine(dataFolder, targetFolder);
-                    File.WriteAllLines(file, lines);
+                    File.WriteAllLines(writePath, lines);
+                    LoginForm.loggedInAccountPassword = newPassword;
 
                     return true;
                 }
@@ -157,6 +180,32 @@ namespace User {
             File.AppendAllText(targetFile, "CONTENT=" + data.Content + "\n");
             File.AppendAllText(targetFile, "ASSIGNED_OPERATOR=" + data.AssignedOperatorName + "\n");
             File.AppendAllText(targetFile, "STATUS=" + data.Status + "\n\n");
+        }
+
+        public void UpdateDataAttributeForAccount(string attributeName, string username, int to) {
+            string dataFolder = Constants.dataFolder;
+            string targetFile = Constants.clientDataFile;
+            string writePath = Path.Combine(dataFolder, targetFile);
+            string[] lines = GetLinesFromFile(targetFile);
+
+            Debug.WriteLine("[{0}] calling update on {1} to {2}", username, attributeName, to);
+
+            for (int i = 0; i < lines.Length; i++) {
+                string line = lines[i];
+                if (line == Constants.clientDataAttributeLiterals["name"] + username) {
+                    for (int j = 0; j < Constants.clientDataEntryLength; j++) {
+                        Debug.WriteLine("comparing: {0} <-> {1}", attributeName, GetAttributeName(lines[i + j]));
+                        if (attributeName == GetAttributeName(lines[i + j])) {
+                            Debug.WriteLine("FOUND!");
+                            lines[i + j] = attributeName + "=" + to.ToString();
+                            goto End;
+                        }
+                    }
+                }
+            }
+
+        End:
+            File.WriteAllLines(writePath, lines);
         }
         // #IOutput
     }

@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            label5 = new Label();
+            titleLabel = new Label();
             label7 = new Label();
             newPasswordTextbox = new TextBox();
             label10 = new Label();
@@ -34,15 +34,15 @@
             statusLabel = new Label();
             SuspendLayout();
             // 
-            // label5
+            // titleLabel
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(90, 9);
-            label5.Name = "label5";
-            label5.Size = new Size(116, 20);
-            label5.TabIndex = 6;
-            label5.Text = "Postavke naloga";
+            titleLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            titleLabel.Location = new Point(16, 9);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(304, 20);
+            titleLabel.TabIndex = 6;
+            titleLabel.Text = "Postavke naloga";
+            titleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label7
             // 
@@ -105,9 +105,9 @@
             // currentUsernameLabel
             // 
             currentUsernameLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            currentUsernameLabel.Location = new Point(90, 29);
+            currentUsernameLabel.Location = new Point(12, 29);
             currentUsernameLabel.Name = "currentUsernameLabel";
-            currentUsernameLabel.Size = new Size(116, 20);
+            currentUsernameLabel.Size = new Size(308, 20);
             currentUsernameLabel.TabIndex = 16;
             currentUsernameLabel.Text = "username";
             currentUsernameLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -134,7 +134,7 @@
             Controls.Add(label10);
             Controls.Add(label11);
             Controls.Add(currentPasswordTextbox);
-            Controls.Add(label5);
+            Controls.Add(titleLabel);
             Name = "AccountSettingsForm";
             Text = "Postavke naloga";
             ResumeLayout(false);
@@ -142,7 +142,7 @@
         }
 
         #endregion
-        private Label label5;
+        private Label titleLabel;
         private Label label7;
         private TextBox newPasswordTextbox;
         private Label label10;

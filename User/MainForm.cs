@@ -9,10 +9,9 @@ using Data;
 
 namespace User {
     public sealed partial class MainForm : Form, Interfaces.IInitializable {
-        // debug parametri za preskakanje prva dva prozora;
-        // ocekuje se da ce finalna verzija zahtijevati (barem) prijavu pri svakom pokretanju
+
+        private static bool firstLogin = false;
         private static bool consentGiven = true;
-        private static bool isLoggedIn = false;
 
         // da li postoji aktivni tiket; potencijalno kreirati posebnu strukturu za dati tiket
         public static bool activeTicketExists = false;
@@ -35,7 +34,7 @@ namespace User {
         }
 
         public void FillStaticConstants() {
-            Text = constants.GetFormWindowTitle("FIRMNAME");
+            Text = constants.GetFormWindowTitle();
         }
 
         public void SetDefaultStates() {
@@ -45,8 +44,33 @@ namespace User {
             accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
             autoRefreshCheckBox.Checked = true;
             refreshButton.Enabled = !autoRefreshCheckBox.Checked;
+
         }
         // #IInitializable
+
+        public MainForm() {
+            Login();
+
+            InitializeComponent();
+            SetDefaultWindowSettings();
+            FillStaticConstants();
+            SetDefaultStates();
+
+            accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
+        }
+
+        private static void SetClientData(ClientData data) {
+            try {
+                bool fl = int.Parse(data.FirstLogin) == 1;
+                bool cg = int.Parse(data.ConsentGiven) == 1;
+
+                firstLogin = fl;
+                consentGiven = cg;
+            }
+            catch {
+                Debug.WriteLine("Izlaz prije inicijalizacije.");
+            }
+        }
 
         private void UpdateButtonStates(TicketStates state) {
             switch (state) {
@@ -118,7 +142,7 @@ namespace User {
 
         private void DisplayTicketData() {
             (bool, TicketData) lookupResult = 
-                fm.LookupTicket(Constants.ticketsFile, LoginForm.loggedInAccountUsername);
+                fm.LookupTicket(LoginForm.loggedInAccountUsername);
 
             TicketData ticketData = lookupResult.Item2;
 
@@ -145,15 +169,11 @@ namespace User {
         }
 
         private void Login() {
-            // ako korisnik nije vec prijavljen, prikazati formu za prijavu
-            if (!isLoggedIn)
-                new LoginForm().ShowDialog();
-            else
-                LoginForm.loginSuccessful = true;
-            // ^ else je za debug, koristi placeholdere za ime naloga
+            new LoginForm().ShowDialog();
+            SetClientData(LoginForm.loggedInAccountData);
 
             // ako je korisnik neuspjesno prijavljen (najcesce forma za prijavu zatvorena na X),
-            // dodati funkciju za zatvaranje koja se poziva po zavrsetku konstruktora
+            // u Load se dodaje funkcija/akcija za zatvaranje koja se poziva po zavrsetku konstruktora
             if (!LoginForm.loginSuccessful)
                 Load += FailedLoginCloseOnStart;
             else {
@@ -164,24 +184,16 @@ namespace User {
                 // MainForm-a
                 if (!consentGiven)
                     new ConsentForm().ShowDialog();
+
+                if (firstLogin)
+                    new AccountSettingsForm(true).ShowDialog();
             }
 
             // pocetak periodicnog azuriranja statusa tiketa i naziva firme svaki sekund
             StartTimedAction("ticketAutoRefresh", () => {
-                Text = constants.GetFormWindowTitle("FIRMNAME");
+                Text = constants.GetFormWindowTitle();
                 DisplayTicketData();
             }, 0.5f, true);
-        }
-
-        public MainForm() {
-            Login();
-
-            InitializeComponent();
-            SetDefaultWindowSettings();
-            FillStaticConstants();
-            SetDefaultStates();
-
-            accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
         }
 
         // "Napravi tiket" dugme
@@ -235,7 +247,7 @@ namespace User {
         }
 
         private void accountSettingsButton_Click(object sender, EventArgs e) {
-            new AccountSettingsForm().ShowDialog();
+            new AccountSettingsForm(false).ShowDialog();
         }
 
         // pri zatvaranju forme ugasiti svaki tajmer jer po nekad dolazi do greske ako

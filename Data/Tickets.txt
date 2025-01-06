@@ -10,3 +10,5 @@ CONTENT=Placam najskuplji paket za TV sa svim mogucim dodatnim bibliotekama, a t
 ASSIGNED_OPERATOR=
 STATUS=Otvoren
 
+
+

@@ -7,7 +7,13 @@
     <Compile Update="AccountSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ArchivedTicketList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ConsentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="CreateTicketForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="LoginForm.cs">

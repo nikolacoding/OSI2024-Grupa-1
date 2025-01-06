@@ -117,7 +117,9 @@ namespace User {
         }
 
         private void DisplayTicketData() {
-            (bool, TicketData) lookupResult = fm.LookupTicket(LoginForm.loggedInAccountUsername);
+            (bool, TicketData) lookupResult = 
+                fm.LookupTicket(Constants.ticketsFile, LoginForm.loggedInAccountUsername);
+
             TicketData ticketData = lookupResult.Item2;
 
             if (lookupResult.Item1) {
@@ -164,8 +166,11 @@ namespace User {
                     new ConsentForm().ShowDialog();
             }
 
-            // pocetak periodicnog azuriranja statusa tiketa svaki sekund
-            StartTimedAction("ticketAutoRefresh", DisplayTicketData, 0.5f, true);
+            // pocetak periodicnog azuriranja statusa tiketa i naziva firme svaki sekund
+            StartTimedAction("ticketAutoRefresh", () => {
+                Text = constants.GetFormWindowTitle("FIRMNAME");
+                DisplayTicketData();
+            }, 0.5f, true);
         }
 
         public MainForm() {
@@ -181,7 +186,8 @@ namespace User {
 
         // "Napravi tiket" dugme
         private void createTicket_click(object sender, EventArgs e) {
-
+            new CreateTicketForm().ShowDialog();
+            DisplayTicketData();
         }
 
         // "Odgovori" dugme

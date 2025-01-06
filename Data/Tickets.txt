@@ -10,8 +10,3 @@ CONTENT=Placam najskuplji paket za TV sa svim mogucim dodatnim bibliotekama, a t
 ASSIGNED_OPERATOR=
 STATUS=Otvoren
 
-CLIENT=a
-TITLE=test test 123
-CONTENT=radi ne radi radi ne radi
-ASSIGNED_OPERATOR=ivanivanovic
-STATUS=Otvoren

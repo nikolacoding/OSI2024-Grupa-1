@@ -1,0 +1,13 @@
+CLIENT=jankojankovic
+TITLE=Nema interneta
+CONTENT=Prestao je da radi juce u 12:00.
+ASSIGNED_OPERATOR=jovanjovanovic
+STATUS=Otvoren
+OPERATOR_RESPONSE=
+
+CLIENT=markomarkovic
+TITLE=Nema televizije
+CONTENT=Placam najskuplji paket za TV sa svim mogucim dodatnim bibliotekama, a tri puna dana ne radi. Juce mi je operater rekao da pisem opet ako ne dodje do danas.
+ASSIGNED_OPERATOR=
+STATUS=Otvoren
+OPERATOR_RESPONSE=

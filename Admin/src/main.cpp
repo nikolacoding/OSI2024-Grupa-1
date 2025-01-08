@@ -1,5 +1,6 @@
 #include "CreateDelete.h"
 #include "HandleOperater.h"
+#include "Tickets.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -35,7 +36,7 @@ int main() {
                 case 2: filePath = ADMIN_FILE; break;
                 case 3: filePath = OPERATOR_FILE; break;
                 default:
-                    std::cerr << "Invalid option.\n";
+                    std::cout << "Invalid option.\n";
                     return 1;
             }
 
@@ -63,11 +64,25 @@ int main() {
                 case 2: filePath = ADMIN_FILE; break;
                 case 3: filePath = OPERATOR_FILE; break;
                 default:
-                    std::cerr << "Invalid option.\n";
+                    std::cout << "Invalid option.\n";
                     return 1;
             }
             
             deleteAccount(filePath);
+        }
+    }
+    else if(glavniIzbor==2)
+    {
+        std::cout<<"Uesite:\n1- za pregled svih tiketa\n"
+        <<"2- za pregled istorije rada na tiketu\n"
+        <<"3 - promjena statusa zatvorenih tiketa\n"
+        <<"Izbor opcije: ";
+        int izbor;
+        std::cin>>izbor;
+
+        switch(izbor)
+        {
+            case 1: ticketReview(TICKETS_FILE);
         }
     }
     else if(glavniIzbor==3)

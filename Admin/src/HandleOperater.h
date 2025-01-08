@@ -42,6 +42,7 @@ void handleOperator()
                     {
                         std::cout<<fileLine[i];
                     }
+                    std::cout<<std::endl;
                 }
             }
 
@@ -54,7 +55,6 @@ void handleOperator()
             }
 
             activeTickets(accountName);
-
             break;
         }  
 }

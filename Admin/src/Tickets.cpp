@@ -133,12 +133,69 @@ void activeTickets(const std::string& accountName)
     }
 
     std::string line;
-    std::string client, title, content, assignedOperator, status, operatorResponse;
+    std::string client="", title="", content="", assignedOperator="", status="", operatorResponse="";
 
-    while (std::getline(inputFile, line))
+    while(!inputFile.eof())
     {
-
+        while (std::getline(inputFile, line))
+        {
+            if(line.find("CLIENT=") != std::string::npos)
+            {
+                client=line;
+            }
+            else if(line.find("TITLE=") != std::string::npos)
+            {
+                title=line;
+            }
+            else if(line.find("CONTENT=") != std::string::npos)
+            {
+                content=line;
+            }
+            else if(line.find("ASSIGNED_OPERATOR=") != std::string::npos)
+            {
+                assignedOperator=line;
+            }
+            else if(line.find("STATUS=") != std::string::npos)
+            {
+                status=line;
+            }
+            else if(line.find("OPERATOR_RESPONSE=") != std::string::npos)
+            {
+                operatorResponse=line;
+            }
+            else if(line.size()==0)
+            {
+                break;
+            }
+        }
+        if(accountName==assignedOperator.substr(18) && status.substr(7)=="Otvoren")
+        {
+            std::cout<<client<<std::endl
+            <<title<<std::endl
+            <<content<<std::endl
+            <<assignedOperator<<std::endl
+            <<status<<std::endl
+            <<operatorResponse<<std::endl
+            <<"---------------------------------\n";
+        }
     }
 
     inputFile.close();
 }
+
+void ticketReview(const std::string& filePath)
+{
+    std::ifstream inputFile(filePath);
+    if(!inputFile)
+    {
+        std::cout<<"Error:Unable to open tasks file.\n";
+        return;
+    }
+
+    std::string line;
+    while(std::getline(inputFile,line))
+    {
+        std::cout<<line<<std::endl;
+    }
+}
+

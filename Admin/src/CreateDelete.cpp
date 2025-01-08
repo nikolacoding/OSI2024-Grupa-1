@@ -44,6 +44,25 @@ void deleteAccount(const std::string &filePath)
         std::string password;
         std::string fileLine;
         bool accountFound = false;
+        int accountCount=0;
+
+        if(filePath==ADMIN_FILE)
+        {
+            while(std::getline(inputFile,fileLine))
+            {
+                accountCount++;
+            }
+            inputFile.clear(); 
+            inputFile.seekg(0, std::ios::beg);
+        }
+        if(accountCount==1)
+        {
+            std::cout<<"Jedini administrator,nalog ne moze biti obrisan\n";
+            inputFile.close();
+            tempFile.close();
+            removeFile("../../Data/TempAccounts.txt");
+            return;
+         }
 
             while (std::getline(inputFile, fileLine)) 
             {
@@ -97,7 +116,7 @@ void deleteAccount(const std::string &filePath)
             }
             else if(filePath == ADMIN_FILE)
             {
-
+                std::cout<<"Administratorski nalog je obrisan\n";
             }
         break;
     }   

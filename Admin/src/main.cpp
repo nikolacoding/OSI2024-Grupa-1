@@ -66,12 +66,8 @@ int main() {
                     std::cerr << "Invalid option.\n";
                     return 1;
             }
-
-            std::string imeNaloga, lozinka;
-            std::cout << "Unesite:\nIme naloga: ";
-            std::cin >> imeNaloga;
-
-            deleteAccount(filePath, imeNaloga);
+            
+            deleteAccount(filePath);
         }
     }
     else if(glavniIzbor==3)

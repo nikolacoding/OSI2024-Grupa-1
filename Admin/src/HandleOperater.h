@@ -1,5 +1,6 @@
 #pragma once
 #include "CreateDelete.h"
+#include "Tickets.h"
 #include <iostream>
 #include <fstream>
 #include <cstdio>
@@ -10,13 +11,13 @@ void handleOperator()
         {
             std::cout << "Unesite:\n"
                     << "Ime naloga: ";
-            std::string inputLine;
-            std::cin >> inputLine;
+            std::string accountName;
+            std::cin >> accountName;
 
             std::ifstream inputFile(OPERATOR_FILE);
             if (!inputFile) 
             {
-                std::cerr << "Error: Could not open the file." << std::endl;
+                std::cout << "Error: Could not open the file." << std::endl;
                 return;
             }
 
@@ -33,7 +34,7 @@ void handleOperator()
                     firstWord += ch;
                 }
 
-                if (firstWord == inputLine)
+                if (firstWord == accountName)
                 {
                     operatorFound = true;
                     std::cout<<"Lozinka operatera: ";
@@ -51,6 +52,9 @@ void handleOperator()
                 std::cout << "Operator does not exist\n";
                 continue;
             }
+
+            activeTickets(accountName);
+
             break;
         }  
 }

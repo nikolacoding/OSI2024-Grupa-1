@@ -5,7 +5,7 @@
 
 int main(void){
     try{
-        MainLoop::Start();
+        MainLoop::Run();
     } catch (const std::exception& e){
         std::cout << e.what() << std::endl;
         return EXIT_FAILURE;

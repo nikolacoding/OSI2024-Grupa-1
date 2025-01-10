@@ -19,6 +19,10 @@ namespace FileManager{
     std::vector<std::string> GetAllOperators();
     std::vector<std::string> GetAllClients();
 
+    bool CheckPaidVersion();
+    bool TryActivatingPaidVersion(const std::string& attemptedKey);
+    const std::string GetFirmName();
+
     std::string GetAttributeName(const std::string& attributeString, char separator = '=');
     std::string GetAttributeValue(const std::string& attributeString, char separator = '=');
 

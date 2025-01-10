@@ -37,8 +37,6 @@ bool FileManager::GetUserData(const std::filesystem::path& filename, const std::
 std::vector<std::string> FileManager::ReadAllLines(const std::filesystem::path& filepath){
     std::vector<std::string> ret;
     std::ifstream stream(filepath);
-    if (stream.is_open())
-        std::cout << "Otvoreno!" << std::endl;
 
     std::string currentLine;
     while (std::getline(stream, currentLine))
@@ -95,7 +93,7 @@ std::vector<TicketData> FileManager::GetAllTickets(){
     std::string currentLine;
 
     while (std::getline(stream, currentLine)){
-        if (currentLine[0] == 'C' && currentLine[1] == 'L'){
+        if (GetAttributeName(currentLine, '=') == "CLIENT"){
             data.push_back(GetTicketData(GetAttributeValue(currentLine)));
         }
     }
@@ -128,6 +126,44 @@ std::vector<std::string> FileManager::GetAllClients(){
     
     stream.close();
     return ret;
+}
+
+bool FileManager::CheckPaidVersion(){
+    std::ifstream stream(GLOBAL_DATA_FILE_PATH);
+    
+    std::string currentLine;
+    while (std::getline(stream, currentLine)){
+        if (GetAttributeName(currentLine, '=') == "PAIDVERSION")
+            return std::stoi(GetAttributeValue(currentLine, '='));
+    }
+
+    stream.close();
+    return false;
+}
+
+bool FileManager::TryActivatingPaidVersion(const std::string& attemptedKey){
+    std::ifstream stream(KEYS_FILE_PATH);
+
+    std::string currentLine;
+    while (std::getline(stream, currentLine)){
+        if (currentLine == attemptedKey)
+            return true;
+    }
+    
+    stream.close();
+    return false;
+}
+
+const std::string FileManager::GetFirmName(){
+    std::ifstream stream(GLOBAL_DATA_FILE_PATH);
+
+    std::string currentLine;
+    while (std::getline(stream, currentLine)){
+        if (GetAttributeName(currentLine) == "FIRMNAME")
+            return GetAttributeValue(currentLine);
+    }
+    
+    return "";
 }
 
 std::string FileManager::GetAttributeName(const std::string& attributeString, char separator) {

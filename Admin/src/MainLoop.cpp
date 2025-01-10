@@ -1,6 +1,6 @@
 #include "MainLoop.h"
 
-void MainLoop::Start(){
+void MainLoop::Run(){
     LoginData data = LoginForm::Login();
     Menu menu(data.username);
     
@@ -10,11 +10,17 @@ void MainLoop::Start(){
 
     menu.show();
 
-    // 1 - Lista aktivnih tiketa
-    // 2 - Lista operatera
-    // 3 - Lista klijenata
-    // 4 - Menadzment naloga
-    // 5 - Menadzment tiketa
+    // "1 - Lista aktivnih tiketa",
+    // "2 - Detaljan pregled tiketa",
+    // "3 - Lista operatera",
+    // "4 - Lista klijenata",
+    // "5 - Promjena podataka naloga",
+    // "6 - Kreiranje/brisanje naloga",
+    // "7 - Menadzment tiketa",
+    // "8 - Pregled statistike",
+    // "9 - Aktivacija komercijalne verzije", *** ukoliko nije vec aktivirana
+    // "0 - Izlaz"
+
     int choice = -1;
     std::string stringChoice;
     int secondaryChoice = -1;
@@ -24,12 +30,15 @@ void MainLoop::Start(){
         menu.wipe();
 
         switch(choice){
+            
+            // Izlaz
             case 0: {
                 std::cout << "Izlazimo..." << std::endl;
                 return;
             }
             break;
 
+            // Lista aktivnih tiketa
             case 1: {
                 std::cout << "Lista tiketa:" << std::endl;
                 tickets = FileManager::GetAllTickets();
@@ -38,7 +47,30 @@ void MainLoop::Start(){
             }
             break;
 
+            // Detaljan pregled tiketa
             case 2: {
+                std::cout << "Ime klijenta autora: " << std::endl;
+                std::cin >> stringChoice;
+
+                tickets = FileManager::GetAllTickets();
+                auto it = std::find_if(tickets.begin(), tickets.end(), [&stringChoice](const TicketData& td){
+                    return td.clientName == stringChoice;
+                });
+
+                if (it == tickets.end()){
+                    std::cout << "Navedeni autor nema aktivnih tiketa." << std::endl;
+                    break;
+                }
+                else{
+                    const TicketData& foundTicket = *it;
+                    std::cout << "Detaljan opis tiketa autora [" << stringChoice << "]:" << std::endl;
+                    foundTicket.display();
+                    break;
+                }
+            }
+
+            // Lista operatera
+            case 3: {
                 operators = FileManager::GetAllOperators();
                 std::cout << "Lista operatera:" << std::endl;
                 for (const auto& o : operators)
@@ -46,7 +78,8 @@ void MainLoop::Start(){
             }
             break;
 
-            case 3: {
+            // Lista klijenata
+            case 4: {
                 clients = FileManager::GetAllClients();
                 std::cout << "Lista klijenata:" << std::endl;
                 for (const auto& c : clients)
@@ -54,7 +87,8 @@ void MainLoop::Start(){
             }
             break;
 
-            case 4: {
+            // Promjena podataka naloga
+            case 5: {
                 std::cout << "Vrsta naloga:\n1 - Klijentski\n2 - Operaterski\n3 - Administratorski\nIzbor: ";
                 std::cin >> secondaryChoice;
 
@@ -104,7 +138,8 @@ void MainLoop::Start(){
             }
             break;
 
-            case 5: {
+            // Kreiranje/brisanje naloga
+            case 6: {
                 std::cout << "Vrsta naloga:\n1 - Klijentski\n2 - Operaterski\n3 - Administratorski\nIzbor: ";
                 std::cin >> secondaryChoice;
 
@@ -157,7 +192,44 @@ void MainLoop::Start(){
                 }
             }
             break;
+
+            // Menadzment tiketa
+            case 7: {
+
+            }
+
+            // Pregled statistike
+            case 8: {
+
+            }
+
+            case 9: {
+                if (menu.isPaid())
+                    goto DEFAULT;
+
+                std::cout << "Unesi kljuc za aktivaciju: ";
+                std::cin >> stringChoice;
+
+                if (FileManager::TryActivatingPaidVersion(stringChoice)){
+                    FileManager::ChangeAttributeValue(GLOBAL_DATA_FILE_PATH, "PAIDVERSION", "1", '=');
+                    std::cout << "Uspjesno aktiviranje komercijalne verzije. " << 
+                        "Ovo zahtijeva ponovno pokretanje programa." << std::endl;
+                    goto EXIT;
+                }
+                else{
+                    std::cout << "Uneseni kljuc je neispravan." << std::endl;
+                    break;
+                }
+            }
+
+            default: {
+                DEFAULT:
+                std::cout << "Unesena opcija nije validna." << std::endl;
+            }
         }
         menu.show();
     }
+
+    EXIT:
+        std::cin.get();
 }

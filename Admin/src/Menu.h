@@ -5,9 +5,15 @@
 #include <string>
 #include <vector>
 
+#include "FileManager.h"
+
 class Menu final {
 public:
-    Menu(const std::string& username) : m_accountUsername(username) {}
+    Menu(const std::string& username) : 
+        m_accountUsername(username), m_firmName(FileManager::GetFirmName()), m_paid(FileManager::CheckPaidVersion()) { 
+        if (!m_paid)
+            m_lines.insert(m_lines.begin() + 10, "9 - Aktivacija komercijalne verzije");
+    }
     ~Menu() = default;
 
     void show() const noexcept {
@@ -17,21 +23,29 @@ public:
     }
 
     void wipe() const noexcept {
-        for (size_t i = 0; i < wipeRows; i++)
+        for (size_t i = 0; i < m_wipeRows; i++)
             std::cout << std::endl;
     }
 
+    inline bool isPaid() const noexcept { return m_paid; }
+
 private:
-    const size_t wipeRows = 25;
+    bool m_paid;
+    const size_t m_wipeRows = 25;
+
     const std::string m_accountUsername;
-    const std::vector<std::string> m_lines = {
+    const std::string m_firmName;
+    std::vector<std::string> m_lines = {
+        "Korisnicka podrska - " + m_firmName + " - " + (m_paid ? "Komercijalna verzija" : "Besplatna verzija"),
         "Nalog: " + m_accountUsername,
         "1 - Lista aktivnih tiketa",
-        "2 - Lista operatera",
-        "3 - Lista klijenata",
-        "4 - Promjena podataka naloga",
-        "5 - Kreiranje/brisanje naloga",
-        "6 - Menadzment tiketa",
+        "2 - Detaljan pregled tiketa",
+        "3 - Lista operatera",
+        "4 - Lista klijenata",
+        "5 - Promjena podataka naloga",
+        "6 - Kreiranje/brisanje naloga",
+        "7 - Menadzment tiketa",
+        "8 - Pregled statistike",
         "0 - Izlaz"
     };
 };

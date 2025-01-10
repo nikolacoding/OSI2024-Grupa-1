@@ -1,5 +1,5 @@
-#pragma once
 #include "Operator.h"
+#include "Data.h"
 
 #include <fstream>
 #include <string>
@@ -8,8 +8,7 @@
 
 bool login(std::string &username)
 {
-    const std::string OPERATOR_FILE = "../../Data/OperatorAccounts.txt";
-    std::ifstream file(OPERATOR_FILE);
+    std::ifstream file(OPERATOR_ACCOUNTS_FILE_PATH);
 
     if (!file.is_open())
     {

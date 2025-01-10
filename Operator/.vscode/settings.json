@@ -48,6 +48,7 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cstdarg": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "filesystem": "cpp"
     }
 }

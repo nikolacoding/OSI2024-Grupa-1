@@ -1,7 +1,7 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu(const std::string& name, const std::vector<std::string>& ticketList)
+Menu::Menu(const std::string& name, const std::vector<TicketData>& ticketList)
     : operatorName(name), tickets(ticketList) {}
 
 void Menu::displayMenu() const {
@@ -9,7 +9,7 @@ void Menu::displayMenu() const {
     std::cout << "Dodijeljeni tiketi:\n";
 
     for (size_t i = 0; i < tickets.size(); ++i) {
-        std::cout << "ID:" << i + 1 << " - [" << tickets[i] << "]\n";
+        tickets[i].displayShort();
     }
 
     std::cout << "\nOpcije:\n";

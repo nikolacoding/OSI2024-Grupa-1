@@ -1,4 +1,4 @@
-#include "FileManager.h"
+ #include "FileManager.h"
 
 bool FileManager::GetUserData(const std::filesystem::path& filename, const std::string& username, LoginData& data) {
     std::ifstream stream(filename);

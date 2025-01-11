@@ -133,6 +133,69 @@ std::vector<TicketData> FileManager::GetAllClosedTickets(){
     return data;
 }
 
+void FileManager::ChangeTicketAttribute(const std::string& clientName, 
+    const std::string& attributeName, const std::string& to){
+
+    auto allTickets = GetAllTickets();
+    std::vector<std::string> allLines;
+    for (const auto& t : allTickets){
+        allLines.push_back("CLIENT=" + t.clientName);
+        allLines.push_back("TITLE=" + t.title);
+        allLines.push_back("CONTENT=" + t.content);
+        allLines.push_back("ASSIGNED_OPERATOR=" + t.assignedOperatorName);
+        allLines.push_back("STATUS=" + t.status);
+        allLines.push_back("OPERATOR_RESPONSE=" + t.operatorResponse);
+        allLines.push_back("\n");
+    }
+
+    for (size_t i = 0; i < allLines.size(); i++){
+        if (allLines[i] == "CLIENT=" + clientName){
+            for (size_t j = 0; j < TICKET_ATTRIBUTE_COUNT; j++){
+                if (GetAttributeName(allLines[i + j]) == attributeName){
+                    allLines[i + j] = attributeName + "=" + to;
+                    goto WRITE;
+                }
+            }
+        }
+    }
+
+WRITE:
+    std::cout << "Writing..." << std::endl;
+    WriteAllLines(TICKETS_FILE_PATH, allLines);
+}
+
+void FileManager::WriteTicketDataToFile(const TicketData& ticketData, const std::filesystem::path& filepath){
+    std::ofstream stream(filepath, std::ios_base::app);
+
+    stream << "CLIENT=" << ticketData.clientName << std::endl;
+    stream << "TITLE=" << ticketData.title << std::endl;
+    stream << "CONTENT=" << ticketData.content << std::endl;
+    stream << "ASSIGNED_OPERATOR=" << ticketData.assignedOperatorName << std::endl;
+    stream << "STATUS=" << ticketData.status << std::endl;
+    stream << "OPERATOR_RESPONSE=" << ticketData.operatorResponse << std::endl << std::endl;
+
+    stream.close();
+}
+
+void FileManager::DeleteTicket(const TicketData& ticketData){
+    std::vector<TicketData> allTickets = GetAllTickets();
+    std::vector<TicketData> newTickets(allTickets.size());
+
+    auto it = std::copy_if(allTickets.begin(), allTickets.end(), newTickets.begin(), [&ticketData](const TicketData& ticket){
+        return ticketData.clientName != ticket.clientName;
+    });
+
+    newTickets.resize(allTickets.size() - 1);
+
+    // brisanje starog sadrzaja
+    std::ofstream delStream(TICKETS_FILE_PATH, std::ios::trunc);
+
+    // upis novog
+    for (const auto& ticket : newTickets){
+        WriteTicketDataToFile(ticket);
+    }
+}
+
 std::vector<std::string> FileManager::GetAllOperators(){
     std::vector<std::string> ret;
 
@@ -185,11 +248,19 @@ DisplayableStats FileManager::GetDisplayableStats(){
         ret.closedTicketsPerOperator[o] = 0;
     }
 
-    for (const auto& ticket : openTickets)
+    for (const auto& ticket : openTickets){
+        if (ticket.assignedOperatorName == "")
+            continue;
+
         ret.openTicketsPerOperator[ticket.assignedOperatorName]++;
+    }
     
-    for (const auto& ticket : closedTickets)
+    for (const auto& ticket : closedTickets){
+        if (ticket.assignedOperatorName == "")
+            continue;
+            
         ret.closedTicketsPerOperator[ticket.assignedOperatorName]++;
+    }
 
     return ret;
 }

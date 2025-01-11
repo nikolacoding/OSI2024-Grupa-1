@@ -30,6 +30,15 @@ struct TicketData {
     std::string assignedOperatorName;
     std::string operatorResponse;
 
+    bool operator==(const TicketData& other){
+        return clientName == other.clientName &&
+               title == other.title &&
+               content == other.content &&
+               status == other.status &&
+               assignedOperatorName == other.assignedOperatorName &&
+               operatorResponse == other.operatorResponse;
+    }
+
     void display() const noexcept {
         std::printf("Ime: %s\nNaslov: %s\nSadrzaj: %s\nStatus: %s\nOperater: %s\nOdgovor: %s\n",
             clientName.c_str(), title.c_str(), content.c_str(), 

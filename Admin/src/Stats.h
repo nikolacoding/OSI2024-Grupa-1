@@ -2,6 +2,7 @@
 #define STATS_H
 
 #include <iostream>
+#include <algorithm>
 #include <map>
 
 struct FunctionalStats {
@@ -16,7 +17,7 @@ struct DisplayableStats {
     std::map<std::string, int> openTicketsPerOperator;
     std::map<std::string, int> closedTicketsPerOperator;
 
-    void display() const noexcept {
+    void display() const noexcept(false) {
         std::cout << "Broj trenutno aktivnih tiketa: " << numActiveTickets << std::endl;
         std::cout << "Broj zatvorenih tiketa: " << numClosedTickets << std::endl;
 
@@ -26,6 +27,16 @@ struct DisplayableStats {
             std::cout << "  - Otvorenih: " << value << std::endl;
             std::cout << "  - Zatvorenih: " << closedTicketsPerOperator.at(key) << std::endl;
         }
+    }
+
+    std::string getLeastOccupiedOperator() {
+        auto it = std::min_element(openTicketsPerOperator.begin(), openTicketsPerOperator.end(), 
+        [](const auto& L, const auto& R){ return L.second < R.second; });
+
+        std::string min_k = it->first;
+        int min_v = it->second;
+
+        return min_k;
     }
 };
 

@@ -17,9 +17,10 @@ RELOAD:
     //X "5 - Promjena podataka naloga",
     //X "6 - Kreiranje/brisanje naloga",
     // "7 - Menadzment tiketa",
-    // "8 - Pregled statistike",
+    //X "8 - Pregled statistike",
     //X "9 - Aktivacija komercijalne verzije", *** ukoliko nije vec aktivirana
-    // "0 - Izlaz"
+    // "10 - Raspodijeli otvorene tikete operaterima"
+    //X "0 - Izlaz"
 
     int choice = -1;
     std::string stringChoice;
@@ -34,7 +35,6 @@ RELOAD:
             // Izlaz
             case 0: {
                 std::cout << "Izlazimo..." << std::endl;
-                return;
             }
             break;
 
@@ -57,15 +57,16 @@ RELOAD:
             case 6: CreateDeleteAccounts(menu); break;
 
             // Menadzment tiketa
-            case 7: {
-
-            }
+            case 7: ManageTickets(); break;
 
             // Pregled statistike
             case 8: DisplayStats(); break;
 
+            // Raspodjela tiketa operaterima
+            case 9: AssignTicketsToOperators(); break;
+
             // Aktivacija komercijalne verzije
-            case 9: ActivatePaidVersion(menu); break;
+            case 10: ActivatePaidVersion(menu); break;
 
             // Nevalidna opcija
             default: InvalidOptionHandler(); break;
@@ -86,7 +87,7 @@ void MainLoop::DetailedTicketDisplay(){
     std::string stringChoice;
     std::vector<TicketData> tickets;
 
-    std::cout << "Ime klijenta autora: " << std::endl;
+    std::cout << "Ime klijenta autora: ";
     std::cin >> stringChoice;
 
     tickets = FileManager::GetAllTickets();
@@ -243,9 +244,65 @@ void MainLoop::CreateDeleteAccounts(const Menu& menu){
     }
 }
 
+void MainLoop::ManageTickets(){
+    int secondaryChoice, tertiaryChoice;
+    std::string stringChoice;
+
+    std::cout << "Opcije:" << std::endl;
+    std::cout << "1 - Zatvoriti aktivni tiket" << std::endl << "Izbor: ";
+    std::cin >> secondaryChoice;
+
+    if (secondaryChoice != 1){
+        std::cout << "Izbor nije validan." << std::endl;
+        return;
+    }
+
+    std::cout << "Ime klijenta za zatvaranje tiketa: ";
+    std::cin >> stringChoice;
+
+    auto allTickets = FileManager::GetAllTickets();
+    auto it = std::find_if(allTickets.begin(), allTickets.end(), [&stringChoice](const TicketData& current){
+        return current.clientName == stringChoice;
+    });
+    
+    if (it == allTickets.end()){
+        std::cout << "Tiket nije pronadjen." << std::endl;
+        return;
+    }
+
+    TicketData data = FileManager::GetActiveTicketData(it->clientName);
+    data.status = "Zatvoren";
+    FileManager::WriteTicketDataToFile(data, ARCHIVED_TICKETS_FILE_PATH);
+    FileManager::DeleteTicket(data);
+}
+ 
 void MainLoop::DisplayStats(){
     DisplayableStats ds = FileManager::GetDisplayableStats();
     ds.display();
+}
+
+void MainLoop::AssignTicketsToOperators(){
+    std::vector<TicketData> allTickets = FileManager::GetAllTickets();
+    std::vector<TicketData> unassignedTickets(allTickets.size());
+    auto it = std::copy_if(allTickets.begin(), allTickets.end(), unassignedTickets.begin(), 
+        [](const TicketData& ticket){
+            return ticket.assignedOperatorName == "";
+    });
+    unassignedTickets.resize(std::distance(unassignedTickets.begin(), it));
+
+    if (unassignedTickets.size() == 0){
+        std::cout << "Nema nedodijeljenih tiketa." << std::endl;
+        return;
+    }
+
+    for (const auto& ticket : unassignedTickets){
+        auto ds = FileManager::GetDisplayableStats();
+        std::string leastOccupied = ds.getLeastOccupiedOperator();
+        FileManager::ChangeTicketAttribute(ticket.clientName, "ASSIGNED_OPERATOR", leastOccupied);
+        FileManager::ChangeTicketAttribute(ticket.clientName, "STATUS", "Dodijeljen operateru");
+
+        std::printf("Tiket '%s' je dodijeljen operateru '%s'.\n", ticket.title.c_str(), leastOccupied.c_str());
+    }
 }
 
 void MainLoop::ActivatePaidVersion(const Menu& menu){

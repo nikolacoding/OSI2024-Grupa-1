@@ -8,7 +8,7 @@ OPERATOR_RESPONSE=
 CLIENT=markomarkovic
 TITLE=Nema televizije
 CONTENT=Placam najskuplji paket za TV sa svim mogucim dodatnim bibliotekama, a tri puna dana ne radi. Juce mi je operater rekao da pisem opet ako ne dodje do danas.
-ASSIGNED_OPERATOR=
+ASSIGNED_OPERATOR=zoranzoranovic
 STATUS=Otvoren
 OPERATOR_RESPONSE=
 

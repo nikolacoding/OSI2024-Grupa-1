@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "Data.h"
+#include "Stats.h"
 
 namespace FileManager{
     bool GetUserData(const std::filesystem::path& filepath, const std::string& username, LoginData& data);
@@ -13,11 +14,15 @@ namespace FileManager{
     static std::vector<std::string> ReadAllLines(const std::filesystem::path& filepath);
     static void WriteAllLines(const std::filesystem::path& filepath, const std::vector<std::string>& lines);
 
-    TicketData GetTicketData(const std::string& username);
+    TicketData GetActiveTicketData(const std::string& username);
     std::vector<TicketData> GetAllTickets();
+    std::vector<TicketData> GetAllClosedTickets();
 
     std::vector<std::string> GetAllOperators();
     std::vector<std::string> GetAllClients();
+
+    FunctionalStats GetFunctionalStats();
+    DisplayableStats GetDisplayableStats();
 
     bool CheckPaidVersion();
     bool TryActivatingPaidVersion(const std::string& attemptedKey);

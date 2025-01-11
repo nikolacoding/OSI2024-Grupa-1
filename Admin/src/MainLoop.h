@@ -6,6 +6,7 @@
 #include "Data.h"
 #include "LoginForm.h"
 #include "Menu.h"
+#include "Stats.h"
 
 namespace MainLoop {
     void Run();

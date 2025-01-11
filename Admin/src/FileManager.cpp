@@ -55,20 +55,18 @@ void FileManager::WriteAllLines(const std::filesystem::path& filepath, const std
     stream.close();
 }
 
-TicketData FileManager::GetTicketData(const std::string& username){
+TicketData FileManager::GetActiveTicketData(const std::string& username){
     std::ifstream stream(TICKETS_FILE_PATH);
 
-    std::string currentLine;
-
     TicketData data;
-    const size_t numRelevantLines = 6;
     std::vector<std::string> relevantLines;
-    relevantLines.resize(numRelevantLines);
+    relevantLines.resize(TICKET_ATTRIBUTE_COUNT);
 
+    std::string currentLine;
     while (std::getline(stream, currentLine)){
         if (GetAttributeValue(currentLine) == username){
             relevantLines[0] = GetAttributeValue(currentLine); // ime
-            for (size_t i = 1; i < numRelevantLines; i++){
+            for (size_t i = 1; i < TICKET_ATTRIBUTE_COUNT; i++){
                 std::getline(stream, currentLine);
                 relevantLines[i] = GetAttributeValue(currentLine);
             }
@@ -94,7 +92,40 @@ std::vector<TicketData> FileManager::GetAllTickets(){
 
     while (std::getline(stream, currentLine)){
         if (GetAttributeName(currentLine, '=') == "CLIENT"){
-            data.push_back(GetTicketData(GetAttributeValue(currentLine)));
+            data.push_back(GetActiveTicketData(GetAttributeValue(currentLine)));
+        }
+    }
+
+    stream.clear();
+    return data;
+}
+
+std::vector<TicketData> FileManager::GetAllClosedTickets(){
+    std::vector<TicketData> data;
+
+    std::ifstream stream(ARCHIVED_TICKETS_FILE_PATH);
+
+    std::vector<std::string> relevantStrings;
+    relevantStrings.resize(TICKET_ATTRIBUTE_COUNT);
+    TicketData currentData;
+    std::string currentLine;
+    while (std::getline(stream, currentLine)){
+        if (GetAttributeName(currentLine) == "CLIENT"){
+            relevantStrings[0] = GetAttributeValue(currentLine);
+
+            for (size_t i = 1; i < TICKET_ATTRIBUTE_COUNT; i++){
+                std::getline(stream, currentLine);
+                relevantStrings[i] = GetAttributeValue(currentLine);
+            }
+
+            currentData.clientName = relevantStrings[0];
+            currentData.title = relevantStrings[1];
+            currentData.content = relevantStrings[2];
+            currentData.assignedOperatorName = relevantStrings[3];
+            currentData.status = relevantStrings[4];
+            currentData.operatorResponse = relevantStrings[5];
+
+            data.push_back(currentData);
         }
     }
 
@@ -125,6 +156,41 @@ std::vector<std::string> FileManager::GetAllClients(){
         ret.push_back(GetAttributeName(currentLine, ':'));
     
     stream.close();
+    return ret;
+}
+
+FunctionalStats FileManager::GetFunctionalStats(){
+    FunctionalStats ret;
+
+    ret.numClientAccounts = GetAllClients().size();
+    ret.numOperatorAccounts = GetAllOperators().size();
+    ret.numAdminAccounts = GetAllOperators().size();
+
+    return ret;
+}
+
+DisplayableStats FileManager::GetDisplayableStats(){
+    DisplayableStats ret;
+
+    auto openTickets = GetAllTickets();
+    auto closedTickets = GetAllClosedTickets();
+    ret.numActiveTickets = openTickets.size();
+    ret.numClosedTickets = closedTickets.size();
+
+    // std::map<std::string, int> openTicketsPerOperator;
+    // std::map<std::string, int> closedTicketsPerOperator;
+    auto allOperators = GetAllOperators();
+    for (const auto& o : allOperators){
+        ret.openTicketsPerOperator[o] = 0;
+        ret.closedTicketsPerOperator[o] = 0;
+    }
+
+    for (const auto& ticket : openTickets)
+        ret.openTicketsPerOperator[ticket.assignedOperatorName]++;
+    
+    for (const auto& ticket : closedTickets)
+        ret.closedTicketsPerOperator[ticket.assignedOperatorName]++;
+
     return ret;
 }
 

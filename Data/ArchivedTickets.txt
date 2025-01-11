@@ -1,0 +1,7 @@
+CLIENT=kupusojekupusovic
+TITLE=Nista mi ne radi
+CONTENT=Cijeli paket mi je u kvaru.
+ASSIGNED_OPERATOR=jankojankovic
+STATUS=Zatvoren
+OPERATOR_RESPONSE=Potvrdjeno kao popravljeno.
+

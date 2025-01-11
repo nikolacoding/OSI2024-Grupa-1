@@ -11,7 +11,15 @@ const std::filesystem::path OPERATOR_ACCOUNTS_FILE_PATH = PATH_PREFIX / "Operato
 const std::filesystem::path CLIENT_ACCOUNTS_FILE_PATH = PATH_PREFIX / "ClientAccounts.txt";
 const std::filesystem::path GLOBAL_DATA_FILE_PATH = PATH_PREFIX / "GlobalData.txt";
 const std::filesystem::path TICKETS_FILE_PATH = PATH_PREFIX / "Tickets.txt";
+const std::filesystem::path ARCHIVED_TICKETS_FILE_PATH = PATH_PREFIX / "ArchivedTickets.txt";
 const std::filesystem::path KEYS_FILE_PATH = PATH_PREFIX / "ActivationKeys.txt";
+#pragma endregion
+
+
+#pragma region Constants
+constexpr int MAX_FREE_OPERATOR_ACCOUNTS = 2;
+constexpr int MAX_FREE_ADMIN_ACCOUNTS = 1;
+constexpr int TICKET_ATTRIBUTE_COUNT = 6;
 #pragma endregion
 
 struct TicketData {

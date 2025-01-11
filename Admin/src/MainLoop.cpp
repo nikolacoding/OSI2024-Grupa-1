@@ -2,23 +2,27 @@
 
 void MainLoop::Run(){
     LoginData data = LoginForm::Login();
+
+RELOAD:
     Menu menu(data.username);
     
     std::vector<TicketData> tickets;
     std::vector<std::string> operators;
     std::vector<std::string> clients;
+    FunctionalStats fs = FileManager::GetFunctionalStats();
+    DisplayableStats ds = FileManager::GetDisplayableStats();
 
     menu.show();
 
-    // "1 - Lista aktivnih tiketa",
-    // "2 - Detaljan pregled tiketa",
-    // "3 - Lista operatera",
-    // "4 - Lista klijenata",
-    // "5 - Promjena podataka naloga",
-    // "6 - Kreiranje/brisanje naloga",
+    //X "1 - Lista aktivnih tiketa",
+    //X "2 - Detaljan pregled tiketa",
+    //X "3 - Lista operatera",
+    //X "4 - Lista klijenata",
+    //X "5 - Promjena podataka naloga",
+    //X "6 - Kreiranje/brisanje naloga",
     // "7 - Menadzment tiketa",
     // "8 - Pregled statistike",
-    // "9 - Aktivacija komercijalne verzije", *** ukoliko nije vec aktivirana
+    //X "9 - Aktivacija komercijalne verzije", *** ukoliko nije vec aktivirana
     // "0 - Izlaz"
 
     int choice = -1;
@@ -146,10 +150,22 @@ void MainLoop::Run(){
                 std::filesystem::path finalPath;    
                 if (secondaryChoice == 1)
                     finalPath = CLIENT_ACCOUNTS_FILE_PATH;
-                else if (secondaryChoice == 2)
+                else if (secondaryChoice == 2){
+                    if (!menu.isPaid() && fs.numOperatorAccounts >= MAX_FREE_OPERATOR_ACCOUNTS){
+                        std::printf("Dostignut je maksimalan broj [%d] operaterskih naloga za besplatnu verziju.", MAX_FREE_OPERATOR_ACCOUNTS);
+                        std::cout << " Aktivirati komercijalnu verziju za uklanjanje ovog ogranicenja." << std::endl;
+                        break;
+                    }
                     finalPath = OPERATOR_ACCOUNTS_FILE_PATH;
-                else if (secondaryChoice == 3)
+                }
+                else if (secondaryChoice == 3){
+                    if (!menu.isPaid() && fs.numAdminAccounts >= MAX_FREE_ADMIN_ACCOUNTS){
+                        std::printf("Dostignut je maksimalan broj [%d] administratorskih naloga za besplatnu verziju.", MAX_FREE_ADMIN_ACCOUNTS);
+                        std::cout << " Aktivirati komercijalnu verziju za uklanjanje ovog ogranicenja." << std::endl;
+                        break;
+                    }
                     finalPath = ADMIN_ACCOUNTS_FILE_PATH;
+                }
                 else{
                     std::cout << "Izbor nije validan." << std::endl;
                     break;
@@ -200,7 +216,7 @@ void MainLoop::Run(){
 
             // Pregled statistike
             case 8: {
-
+                ds.display();
             }
 
             case 9: {
@@ -213,8 +229,8 @@ void MainLoop::Run(){
                 if (FileManager::TryActivatingPaidVersion(stringChoice)){
                     FileManager::ChangeAttributeValue(GLOBAL_DATA_FILE_PATH, "PAIDVERSION", "1", '=');
                     std::cout << "Uspjesno aktiviranje komercijalne verzije. " << 
-                        "Ovo zahtijeva ponovno pokretanje programa." << std::endl;
-                    goto EXIT;
+                        "Ovo zahtijeva ponovno ucitavanje sistema." << std::endl;
+                    goto RELOAD;
                 }
                 else{
                     std::cout << "Uneseni kljuc je neispravan." << std::endl;

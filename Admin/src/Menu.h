@@ -12,7 +12,7 @@ public:
     Menu(const std::string& username) : 
         m_accountUsername(username), m_firmName(FileManager::GetFirmName()), m_paid(FileManager::CheckPaidVersion()) { 
         if (!m_paid)
-            m_lines.insert(m_lines.begin() + 10, "9 - Aktivacija komercijalne verzije");
+            m_lines.insert(m_lines.begin() + 10, "10 - Aktivacija komercijalne verzije");
     }
     ~Menu() = default;
 
@@ -46,6 +46,7 @@ private:
         "6 - Kreiranje/brisanje naloga",
         "7 - Menadzment tiketa",
         "8 - Pregled statistike",
+        "9 - Raspodijeli otvorene tikete operaterima",
         "0 - Izlaz"
     };
 };

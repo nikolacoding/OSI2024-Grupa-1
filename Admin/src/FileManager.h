@@ -17,6 +17,9 @@ namespace FileManager{
     TicketData GetActiveTicketData(const std::string& username);
     std::vector<TicketData> GetAllTickets();
     std::vector<TicketData> GetAllClosedTickets();
+    void ChangeTicketAttribute(const std::string& clientName, const std::string& attributeName, const std::string& to);
+    void WriteTicketDataToFile(const TicketData& ticketData, const std::filesystem::path& filepath = TICKETS_FILE_PATH);
+    void DeleteTicket(const TicketData& ticketData);
 
     std::vector<std::string> GetAllOperators();
     std::vector<std::string> GetAllClients();

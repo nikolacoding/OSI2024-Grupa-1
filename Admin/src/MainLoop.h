@@ -10,6 +10,16 @@
 
 namespace MainLoop {
     void Run();
+
+    static void DisplayShortTicketList();
+    static void DetailedTicketDisplay();
+    static void DisplayAllOperators();
+    static void DisplayAllClients();
+    static void ModifyAccountData();
+    static void CreateDeleteAccounts(const Menu& menu);
+    static void DisplayStats();
+    static void ActivatePaidVersion(const Menu& menu);
+    static void InvalidOptionHandler();
 };
 
 #endif

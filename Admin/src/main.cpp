@@ -11,5 +11,7 @@ int main(void){
         return EXIT_FAILURE;
     }
 
+    system("pause");
+
     return EXIT_SUCCESS;
 }

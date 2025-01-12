@@ -146,6 +146,81 @@ void Menu::ChangeOperatorResponse(int index, std::string response)
     outputFile.close();
 }
 
+void Menu::CloseTicket(int index, std::string response)
+{
+    const std::string filename = "..\\..\\Data\\Tickets.txt";
+    const std::string archiveFilename = "..\\..\\Data\\ArchivedTickets.txt";
+    std::string client = tickets[index].clientName;
+    std::ifstream inputFile(filename);
+
+    if (!inputFile)
+    {
+        std::cerr << "Error: Unable to open file " << filename << " for reading." << std::endl;
+        return;
+    }
+
+    std::ofstream archiveFile(archiveFilename, std::ios::app);
+    if (!archiveFile)
+    {
+        std::cerr << "Error: Unable to open file " << archiveFilename << " for appending." << std::endl;
+        inputFile.close();
+        return;
+    }
+
+    std::ostringstream tempBuffer;
+    std::string line;
+    bool clientFound = false;
+    std::ostringstream ticketBuffer;
+
+    while (std::getline(inputFile, line))
+    {
+        if (line.rfind("CLIENT=", 0) == 0 && line.substr(7) == client)
+        {
+            clientFound = true;
+            ticketBuffer << line << '\n';
+
+            // Copy the ticket details and add the operator response
+            while (std::getline(inputFile, line) && !line.empty())
+            {
+                if (line.rfind("OPERATOR_RESPONSE=", 0) == 0)
+                {
+                    ticketBuffer << "OPERATOR_RESPONSE=" << response << '\n';
+                }
+                else
+                {
+                    ticketBuffer << line << '\n';
+                }
+            }
+
+            // Write the completed ticket to the archive file
+            archiveFile << ticketBuffer.str() << '\n';
+        }
+        else
+        {
+            tempBuffer << line << '\n';
+        }
+    }
+
+    inputFile.close();
+    archiveFile.close();
+
+    if (!clientFound)
+    {
+        std::cerr << "Error: Client \"" << client << "\" not found in the file." << std::endl;
+        return;
+    }
+
+    std::ofstream outputFile(filename);
+    if (!outputFile)
+    {
+        std::cerr << "Error: Unable to open file " << filename << " for writing." << std::endl;
+        return;
+    }
+
+    outputFile << tempBuffer.str();
+    outputFile.close();
+}
+
 void Menu::runMenu()
 {
     int choice = -1;
@@ -188,6 +263,24 @@ void Menu::runMenu()
 
             ChangeTicketStatus(ID - 1, "Vracen");
             ChangeOperatorResponse(ID - 1, response);
+        }
+        if (choice == 3)
+        {
+            int ID;
+            std::string response;
+            do
+            {
+                std::cout << "\nTicked ID: ";
+                std::cin >> ID;
+            } while (ID < 1);
+
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            std::cout << "Enter operator response: ";
+            std::getline(std::cin, response);
+
+            ChangeTicketStatus(ID - 1, "Zatvoren");
+            CloseTicket(ID - 1, response);
         }
     }
 }

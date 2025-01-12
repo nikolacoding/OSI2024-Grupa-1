@@ -1,15 +1,17 @@
 #include "Menu.h"
 #include <iostream>
 
-Menu::Menu(const std::string& name, const std::vector<TicketData>& ticketList)
+Menu::Menu(const std::string &name, const std::vector<TicketData> &ticketList)
     : operatorName(name), tickets(ticketList) {}
 
-void Menu::displayMenu() const {
+void Menu::displayMenu() const
+{
     std::cout << "\nPrijavljeni operater - [" << operatorName << "]\n";
     std::cout << "Dodijeljeni tiketi:\n";
 
-    for (size_t i = 0; i < tickets.size(); ++i) {
-        tickets[i].displayShort();
+    for (size_t i = 0; i < tickets.size(); ++i)
+    {
+        tickets[i].displayShort(i);
     }
 
     std::cout << "\nOpcije:\n";
@@ -19,18 +21,33 @@ void Menu::displayMenu() const {
     std::cout << "0 - kraj rada\n";
 }
 
-void Menu::runMenu() {
+void Menu::runMenu()
+{
     int choice = -1;
 
-    while (choice != 0) {
+    while (choice != 0)
+    {
         displayMenu();
         std::cout << "\nUnesite opciju: ";
         std::cin >> choice;
 
-        if (choice == 0) {
+        if (choice == 0)
+        {
             std::cout << "Zavrsavanje rada...\n";
-        } else {
-            std::cout << "Opcija nije implementirana u ovom zadatku.\n";
         }
+        if (choice == 1)
+        {
+            int ID;
+            do
+            {
+                std::cout << "\nTicked ID: ";
+                std::cin >> ID;
+            } while (ID < 1);
+
+            tickets[ID - 1].display();
+        }
+        if (choice == 2)
+        {
+                }
     }
 }

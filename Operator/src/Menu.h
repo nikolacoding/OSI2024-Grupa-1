@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "Data.h"
-
 class Menu
 {
 private:
@@ -14,4 +13,6 @@ public:
     Menu(const std::string &name, const std::vector<TicketData> &ticketList);
     void displayMenu() const;
     void runMenu();
+    void ChangeTicketStatus(int index, std::string status);
+    void ChangeOperatorResponse(int index, std::string response);
 };

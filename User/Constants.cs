@@ -20,8 +20,9 @@ namespace User {
         public static readonly string dataFolder = Path.Combine(projFolder, "Data");
         public static readonly string clientAccountsFile = "ClientAccounts.txt";
         public static readonly string clientDataFile = "ClientData.txt";
-        public static readonly string globaldataFile = "GlobalData.txt";
+        public static readonly string globalDataFile = "GlobalData.txt";
         public static readonly string ticketsFile = "Tickets.txt";
+        public static readonly string archivedTicketsFile = "ArchivedTickets.txt";
 
         public static readonly int clientDataEntryLength = 3;
         public static readonly int ticketDataEntryLength = 6;

@@ -39,12 +39,13 @@ namespace User {
 
         public void SetDefaultStates() {
             DisplayTicketData();
-            archivedTicketsButton.Enabled = false;
+            archivedTicketsButton.Enabled = 
+                fm.GetAllArchivedTickets(LoginForm.loggedInAccountUsername).Count > 0;
+
             refreshButton.Enabled = true;
             accountNameLabel.Text = "Nalog: " + LoginForm.loggedInAccountUsername;
             autoRefreshCheckBox.Checked = true;
             refreshButton.Enabled = !autoRefreshCheckBox.Checked;
-
         }
         // #IInitializable
 
@@ -193,6 +194,10 @@ namespace User {
             StartTimedAction("ticketAutoRefresh", () => {
                 Text = constants.GetFormWindowTitle();
                 DisplayTicketData();
+
+                archivedTicketsButton.Enabled =
+                    fm.GetAllArchivedTickets(LoginForm.loggedInAccountUsername).Count > 0;
+
             }, 0.5f, true);
         }
 
@@ -209,7 +214,7 @@ namespace User {
 
         // "Arhivirani tiketi" dugme
         private void archivedTicketsButton_Click(object sender, EventArgs e) {
-
+            new ArchivedTicketList().Show();
         }
 
         // "Refresh" dugme

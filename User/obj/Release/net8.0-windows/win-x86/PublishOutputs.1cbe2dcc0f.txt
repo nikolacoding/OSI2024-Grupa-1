@@ -1,0 +1,5 @@
+X:\Projekti\OSI2024\Data\User.exe
+X:\Projekti\OSI2024\Data\User.dll
+X:\Projekti\OSI2024\Data\User.deps.json
+X:\Projekti\OSI2024\Data\User.runtimeconfig.json
+X:\Projekti\OSI2024\Data\User.pdb

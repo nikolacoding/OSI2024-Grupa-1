@@ -1,0 +1,5 @@
+X:\Projekti\OSI2024\User\bin\Release\net8.0-windows\publish\User.exe
+X:\Projekti\OSI2024\User\bin\Release\net8.0-windows\publish\User.dll
+X:\Projekti\OSI2024\User\bin\Release\net8.0-windows\publish\User.deps.json
+X:\Projekti\OSI2024\User\bin\Release\net8.0-windows\publish\User.runtimeconfig.json
+X:\Projekti\OSI2024\User\bin\Release\net8.0-windows\publish\User.pdb

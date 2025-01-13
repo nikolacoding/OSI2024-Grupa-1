@@ -163,7 +163,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(701, 542);
+            ClientSize = new Size(411, 542);
             Controls.Add(label5);
             Controls.Add(operatorResponseTextBox);
             Controls.Add(contentCharCounter);
@@ -178,7 +178,7 @@
             Controls.Add(clientNameTextBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "RespondTicketForm";
-            Text = "RespondTicketForm";
+            Text = "Odgovori";
             ResumeLayout(false);
             PerformLayout();
         }

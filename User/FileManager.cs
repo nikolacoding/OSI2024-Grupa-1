@@ -17,6 +17,7 @@ namespace User {
         string? LookupGlobalAttribute(string attributeName);
         (bool, TicketData) LookupTicket(string username);
         ClientData GetClientData(string username);
+        List<TicketData> GetAllArchivedTickets(string username);
     }
 
     interface IOutput {
@@ -80,7 +81,7 @@ namespace User {
         }
 
         public string? LookupGlobalAttribute(string attributeName) {
-            string targetFile = Constants.globaldataFile;
+            string targetFile = Constants.globalDataFile;
             string[] lines = GetLinesFromFile(targetFile);
 
             if (lines != null)
@@ -147,6 +148,33 @@ namespace User {
                 FirstLogin = relevantLines[1],
                 ConsentGiven = relevantLines[2],
             };
+        }
+
+        public List<TicketData> GetAllArchivedTickets(string username) {
+            List<TicketData> res = new();
+
+            string key = Constants.commonAttributeLiterals["name"] + username;
+            string[] lines = GetLinesFromFile(Constants.archivedTicketsFile);
+            for (int i = 0; i < lines.Length; i++) {
+                if (lines[i] == key) {
+                    TicketData currentTicketData = new();
+                    string[] relevantLines = new string[Constants.ticketDataEntryLength];
+                    for (int j = 0; j < Constants.ticketDataEntryLength; j++)
+                        relevantLines[j] = GetAttributeValue(lines[i + j]);
+
+                    currentTicketData.ClientName = relevantLines[0];
+                    currentTicketData.Title = relevantLines[1];
+                    currentTicketData.Content = relevantLines[2];
+                    currentTicketData.AssignedOperatorName = relevantLines[3];
+                    currentTicketData.Status = relevantLines[4];
+                    currentTicketData.OperatorResponse = relevantLines[5];
+
+                    res.Add(currentTicketData);
+                }
+
+            }
+
+            return res;
         }
         // #IInput
 

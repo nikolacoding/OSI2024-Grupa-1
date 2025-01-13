@@ -1,6 +1,0 @@
-CLIENT=a
-TITLE=asdasd
-CONTENT=asdasd
-ASSIGNED_OPERATOR=
-STATUS=Otvoren
-

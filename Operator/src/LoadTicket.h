@@ -7,6 +7,6 @@
 
 std::vector<TicketData> loadTicketsForOperator(const std::string& operatorName);
 
-void displayMenu(const std::vector<TicketData>& tickets, const std::string& operatorName);
+void dzdisplayMenu(const std::vector<TicketData>& tickets, const std::string& operatorName);
 
 #endif 

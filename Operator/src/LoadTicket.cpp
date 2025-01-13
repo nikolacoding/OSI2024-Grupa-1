@@ -1,4 +1,5 @@
 #include "LoadTicket.h"
+#include "Operator.h"
 #include "Data.h"
 
 #include <fstream>

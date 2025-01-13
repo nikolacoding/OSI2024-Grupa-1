@@ -7,6 +7,7 @@
 
 #include "Data.h"
 #include "Stats.h"
+#include "Operator.h"
 
 namespace FileManager
 {

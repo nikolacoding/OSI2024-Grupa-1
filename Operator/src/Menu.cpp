@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Operator.h"
 #include <iostream>
 
 Menu::Menu(const std::string &name, const std::vector<TicketData> &ticketList)
@@ -228,7 +229,7 @@ void Menu::runMenu()
     while (choice != 0)
     {
         displayMenu();
-        std::cout << "\nUnesite opciju: ";
+        std::cout << "\nIzbor: ";
         std::cin >> choice;
 
         if (choice == 0)
@@ -240,11 +241,14 @@ void Menu::runMenu()
             int ID;
             do
             {
-                std::cout << "\nTicked ID: ";
+                std::cout << "\nTicket ID: ";
                 std::cin >> ID;
             } while (ID < 1);
 
-            tickets[ID - 1].display();
+            if (tickets.size() > ID)
+                tickets[ID - 1].display();
+            else
+                std::cout << "Tiket sa datim ID-jem ne postoji." << std::endl;
         }
         if (choice == 2)
         {

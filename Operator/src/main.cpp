@@ -1,9 +1,6 @@
 #include "Operator.h"
-#include "Operator.cpp"
 #include "LoadTicket.h"
-#include "LoadTicket.cpp"
 #include "Menu.h"
-#include "Menu.cpp"
 
 int main()
 {

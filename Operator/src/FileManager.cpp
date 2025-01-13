@@ -1,5 +1,6 @@
 #include "FileManager.h"
 
+
 bool FileManager::GetUserData(const std::filesystem::path &filename, const std::string &username, LoginData &data)
 {
     std::ifstream stream(filename);
@@ -248,54 +249,6 @@ std::vector<std::string> FileManager::GetAllClients()
         ret.push_back(GetAttributeName(currentLine, ':'));
 
     stream.close();
-    return ret;
-}
-
-FunctionalStats FileManager::GetFunctionalStats()
-{
-    FunctionalStats ret;
-
-    ret.numClientAccounts = GetAllClients().size();
-    ret.numOperatorAccounts = GetAllOperators().size();
-    ret.numAdminAccounts = GetAllOperators().size();
-
-    return ret;
-}
-
-DisplayableStats FileManager::GetDisplayableStats()
-{
-    DisplayableStats ret;
-
-    auto openTickets = GetAllTickets();
-    auto closedTickets = GetAllClosedTickets();
-    ret.numActiveTickets = openTickets.size();
-    ret.numClosedTickets = closedTickets.size();
-
-    // std::map<std::string, int> openTicketsPerOperator;
-    // std::map<std::string, int> closedTicketsPerOperator;
-    auto allOperators = GetAllOperators();
-    for (const auto &o : allOperators)
-    {
-        ret.openTicketsPerOperator[o] = 0;
-        ret.closedTicketsPerOperator[o] = 0;
-    }
-
-    for (const auto &ticket : openTickets)
-    {
-        if (ticket.assignedOperatorName == "")
-            continue;
-
-        ret.openTicketsPerOperator[ticket.assignedOperatorName]++;
-    }
-
-    for (const auto &ticket : closedTickets)
-    {
-        if (ticket.assignedOperatorName == "")
-            continue;
-
-        ret.closedTicketsPerOperator[ticket.assignedOperatorName]++;
-    }
-
     return ret;
 }
 

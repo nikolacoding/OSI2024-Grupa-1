@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Operator.h"
 #include <iostream>
 
 Menu::Menu(const std::string &name, const std::vector<TicketData> &ticketList)
@@ -227,6 +228,7 @@ void Menu::runMenu()
 
     while (choice != 0)
     {
+    START:
         displayMenu();
         std::cout << "\nUnesite opciju: ";
         std::cin >> choice;
@@ -240,8 +242,9 @@ void Menu::runMenu()
             int ID;
             do
             {
-                std::cout << "\nTiket ID: ";
+                std::cout << "\nTiket ID ('-1' za odustajanje): ";
                 std::cin >> ID;
+                if (ID == -1) goto START;
             } while (ID < 1 || ID > tickets.size());
 
             tickets[ID - 1].display();
@@ -252,8 +255,9 @@ void Menu::runMenu()
             std::string response;
             do
             {
-                std::cout << "\nTiket ID: ";
+                std::cout << "\nTiket ID ('-1' za odustajanje): ";
                 std::cin >> ID;
+                if (ID == -1) goto START;
             } while (ID < 1 || ID > tickets.size());
 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -270,8 +274,9 @@ void Menu::runMenu()
             std::string response;
             do
             {
-                std::cout << "\nTiket ID: ";
+                std::cout << "\nTiket ID ('-1' za odustajanje): ";
                 std::cin >> ID;
+                if (ID == -1) goto START;
             } while (ID < 1 || ID > tickets.size());
 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

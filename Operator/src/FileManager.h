@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 #include "Data.h"
-#include "Stats.h"
 
 namespace FileManager
 {
@@ -24,9 +24,6 @@ namespace FileManager
 
     std::vector<std::string> GetAllOperators();
     std::vector<std::string> GetAllClients();
-
-    FunctionalStats GetFunctionalStats();
-    DisplayableStats GetDisplayableStats();
 
     bool CheckPaidVersion();
     bool TryActivatingPaidVersion(const std::string &attemptedKey);

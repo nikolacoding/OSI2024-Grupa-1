@@ -29,7 +29,7 @@ void Menu::ChangeTicketStatus(int index, std::string newStatus)
 
         if (!inputFile)
         {
-            std::cerr << "Error: Unable to open file " << TICKETS_FILE << " for reading." << std::endl;
+            std::cerr << "Error: Ne mogu da otvorim fajl " << TICKETS_FILE << " za citanje." << std::endl;
             return;
         }
 
@@ -75,7 +75,7 @@ void Menu::ChangeTicketStatus(int index, std::string newStatus)
         std::ofstream outputFile(TICKETS_FILE);
         if (!outputFile)
         {
-            std::cerr << "Error: Unable to open file " << TICKETS_FILE << " for writing." << std::endl;
+            std::cerr << "Error: Ne mogu da otvorim fajl " << TICKETS_FILE << " za pisanje." << std::endl;
             return;
         }
 
@@ -91,7 +91,7 @@ void Menu::ChangeOperatorResponse(int index, std::string response)
 
     if (!inputFile)
     {
-        std::cerr << "Error: Unable to open file " << TICKETS_FILE << " for reading." << std::endl;
+        std::cerr << "Error: Ne mogu da otvorim fajl " << TICKETS_FILE << " za citanje." << std::endl;
         return;
     }
 
@@ -138,7 +138,7 @@ void Menu::ChangeOperatorResponse(int index, std::string response)
     std::ofstream outputFile(TICKETS_FILE);
     if (!outputFile)
     {
-        std::cerr << "Error: Unable to open file " << TICKETS_FILE << " for writing." << std::endl;
+        std::cerr << "Error: Ne mogu da otvorim fajl " << TICKETS_FILE << " za pisanje." << std::endl;
         return;
     }
 
@@ -155,14 +155,14 @@ void Menu::CloseTicket(int index, std::string response)
 
     if (!inputFile)
     {
-        std::cerr << "Error: Unable to open file " << filename << " for reading." << std::endl;
+        std::cerr << "Error: Ne mogu da otvorim fajl " << filename << " za citanje." << std::endl;
         return;
     }
 
     std::ofstream archiveFile(archiveFilename, std::ios::app);
     if (!archiveFile)
     {
-        std::cerr << "Error: Unable to open file " << archiveFilename << " for appending." << std::endl;
+        std::cerr << "Error: Ne mogu da otvorim fajl " << archiveFilename << " za dodavanje." << std::endl;
         inputFile.close();
         return;
     }
@@ -206,14 +206,14 @@ void Menu::CloseTicket(int index, std::string response)
 
     if (!clientFound)
     {
-        std::cerr << "Error: Client \"" << client << "\" not found in the file." << std::endl;
+        std::cerr << "Error: Klijent \"" << client << "\" ne postoji u fajlu." << std::endl;
         return;
     }
 
     std::ofstream outputFile(filename);
     if (!outputFile)
     {
-        std::cerr << "Error: Unable to open file " << filename << " for writing." << std::endl;
+        std::cerr << "Error: Ne mogu da otvorim fajl " << filename << " za pisanje." << std::endl;
         return;
     }
 
@@ -240,9 +240,9 @@ void Menu::runMenu()
             int ID;
             do
             {
-                std::cout << "\nTicked ID: ";
+                std::cout << "\nTiket ID: ";
                 std::cin >> ID;
-            } while (ID < 1);
+            } while (ID < 1 || ID > tickets.size());
 
             tickets[ID - 1].display();
         }
@@ -252,13 +252,13 @@ void Menu::runMenu()
             std::string response;
             do
             {
-                std::cout << "\nTicked ID: ";
+                std::cout << "\nTiket ID: ";
                 std::cin >> ID;
-            } while (ID < 1);
+            } while (ID < 1 || ID > tickets.size());
 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            std::cout << "Enter operator response: ";
+            std::cout << "Odgovor operatera: ";
             std::getline(std::cin, response);
 
             ChangeTicketStatus(ID - 1, "Vracen");
@@ -270,13 +270,13 @@ void Menu::runMenu()
             std::string response;
             do
             {
-                std::cout << "\nTicked ID: ";
+                std::cout << "\nTiket ID: ";
                 std::cin >> ID;
-            } while (ID < 1);
+            } while (ID < 1 || ID > tickets.size());
 
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-            std::cout << "Enter operator response: ";
+            std::cout << "Odgovor operatera: ";
             std::getline(std::cin, response);
 
             ChangeTicketStatus(ID - 1, "Zatvoren");
